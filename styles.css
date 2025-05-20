@@ -14,7 +14,7 @@ html, body {
     font-family: Arial, sans-serif;
 }
 
-.form-container {
+#form-container {
     position: fixed;
     top: 50%;
     left: 50%;
