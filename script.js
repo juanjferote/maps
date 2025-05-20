@@ -5,34 +5,44 @@ function emojiUrl(unicodeHex) {
 }
 
 var ubicacionesLeon = [
-    { nombre: "Catedral de León", coords: [42.599444, -5.566667], icono: emojiUrl("26ea") },      // ⛪
-    { nombre: "Casa Botines", coords: [42.598444, -5.570722], icono: emojiUrl("1f3f0") },          // 🏰
-    { nombre: "Convento de San Marcos", coords: [42.601806, -5.582111], icono: emojiUrl("26ea") }  // ⛪
+    { nombre: "Catedral de León", coords: [42.599444, -5.566667], icono: "⛪" },
+    { nombre: "Plaza del Grano", coords: [42.598444, -5.570722], icono: "🏰" },
+    { nombre: "Estadio Reino de León", coords: [42.601806, -5.582111], icono: "🏟️" },
+    { nombre: "MUSAC", coords: [42.603333, -5.586944], icono: "🖼️" }
 ];
+
 
 var ubicacionesDublin = [
-    { nombre: "General Post Office", coords: [53.349805, -6.26031], icono: "images/iglesia.png" },     // 📢
-    { nombre: "Guinness Storehouse", coords: [53.341857, -6.286003], icono: emojiUrl("1f37a") },    // 🍺
-    { nombre: "Trinity College", coords: [53.3441, -6.2576], icono: emojiUrl("1f393") }             // 🎓
+    { nombre: "Saint Patrick's Cathedral", coords: [53.339444, -6.271944], icono: "images/iglesia.png" },  // 📢
+    { nombre: "Guinness Storehouse", coords: [53.341857, -6.286003], icono: emojiUrl("1f37a") },           // 🍺
+    { nombre: "Merrion Square", coords: [53.3441, -6.2576], icono: emojiUrl("1f393") },                    // 🎓
+    { nombre: "Estadio Aviva Dublin", coords: [53.3351, -6.2285], icono: emojiUrl("1f3df") }                      // 🏟️
 ];
+
 
 var ubicacionesBogota = [
-    { nombre: "Monserrate", coords: [4.605260, -74.055561], icono: emojiUrl("1f3de") },             // 🏞️
-    { nombre: "Betel", coords: [4.577500, -74.130600], icono: emojiUrl("1f3de") },                  // 🏞️
-    { nombre: "Jardín Botánico", coords: [4.658400, -74.093500], icono: emojiUrl("1f333") }         // 🌳
+    { nombre: "Monserrate", coords: [4.605260, -74.055561], icono: emojiUrl("1f3de") },          // 🏞️
+    { nombre: "Plaza de Bolívar", coords: [4.598056, -74.076111], icono: emojiUrl("1f3f0") },     // 🏰
+    { nombre: "Estadio El Campín", coords: [4.645278, -74.093611], icono: emojiUrl("1f3df") },    // 🏟️
+    { nombre: "Museo de Botero", coords: [4.598333, -74.075833], icono: emojiUrl("1f3a8") }       // 🎨
 ];
+
 
 var ubicacionesVarsovia = [
-    { nombre: "Plaza del Mercado", coords: [52.249431, 21.012268], icono: emojiUrl("1f3de") },      // 🏞️
-    { nombre: "Palacio de Cultura y Ciencia", coords: [52.231838, 21.006592], icono: emojiUrl("1f3f0") }, // 🏰
-    { nombre: "Palacio de Wilanów", coords: [52.165367, 21.089199], icono: emojiUrl("1f3f0") }      // 🏰
+    { nombre: "Catedral St. Mary Magdalene", coords: [52.249431, 21.012268], icono: emojiUrl("26ea") },           // ⛪
+    { nombre: "Plaza del Mercado de Varsovia", coords: [52.231838, 21.006592], icono: emojiUrl("1f3f0") },        // 🏰
+    { nombre: "Estadio Nacional de Varsovia", coords: [52.239444, 21.045278], icono: emojiUrl("1f3df") },         // 🏟️
+    { nombre: "Museo de Chopin", coords: [52.231111, 21.021111], icono: emojiUrl("1f3a8") }                        // 🎨
 ];
 
+
 var ubicacionesTokio = [
-    { nombre: "Torre de Tokio", coords: [35.6585805, 139.7454329], icono: emojiUrl("1f5fc") },      // 🗼
-    { nombre: "Palacio Imperial", coords: [35.685175, 139.752799], icono: emojiUrl("1f3f0") },      // 🏰
-    { nombre: "Templo Senso-ji", coords: [35.714765, 139.796655], icono: emojiUrl("26ea") }         // ⛪
+    { nombre: "Templo de Tokio", coords: [35.6585805, 139.7454329], icono: emojiUrl("1f5fc") },                   // 🗼
+    { nombre: "Paso Peatonal de Shibuya", coords: [35.6595, 139.7006], icono: emojiUrl("1f3f0") },               // 🏰
+    { nombre: "Estadio Olímpico de Tokio", coords: [35.6785, 139.7141], icono: emojiUrl("1f3df") },              // 🏟️
+    { nombre: "Museo Nacional de Tokio", coords: [35.7188, 139.7766], icono: emojiUrl("1f3a8") }                 // 🎨
 ];
+
 
 
 function initMap() {
