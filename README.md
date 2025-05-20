@@ -29,10 +29,10 @@ Proyecto "maps" Sesión 1 – Insertar un mapa. Para practias 1ºDAW
 [Hemos creado el formulario para seleccionar las ciudades y que al indicar la localización se redireccione con zoom y muestre en el mapa lugares de esas ciudades que elegimos nosotros que añadimos en arrays]
 
 **Dificultades encontradas**
-- [Dificultad 1: Poner los iconos en el mapa]
+- [Dificultad 1: Poner los iconos personalizados en el mapa utilizando emojis]
 
 **Soluciones aplicadas:**^
-- [Investigamos en paginas web e inteligencias artificiales]
+- [Solución 1: Descargar las imágenes y almacenarlas en una carpeta]
 
 **Fuentes consultadas**
 - [https://chatgpt.com/]
