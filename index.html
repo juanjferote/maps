@@ -4,17 +4,20 @@
     <title>Mapa Simple</title>
     <link rel="stylesheet" href="styles.css">
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
-    <label for="ciudad">Ciudad:</label>
+    <div class="form-container">
+      <label for="ciudad">Selecciona una ciudad:</label>
       <select id="ciudad" name="ciudad" required>
-        <option value="">Selecciona una ciudad:</option>
+        <option value="">-- Elige una ciudad --</option>
         <option value="leon">León</option>
         <option value="dublin">Dublín</option>
         <option value="bogota">Bogotá</option>
         <option value="varsovia">Varsovia</option>
         <option value="tokio">Tokio</option>
       </select>
+    </div>
     <div id="map"></div>
     <script src="script.js"></script>
     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBkE25WUc7ApIr8wSsvSq6rjAfRehZYZk&callback=initMap"></script>
