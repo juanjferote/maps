@@ -1,5 +1,5 @@
 # maps
-Proyecto "maps" Sesión 1 – Insertar un mapa. Para practias 1ºDAW
+Proyecto "maps" Sesión 1 – Insertar un mapa. Para practicas 1ºDAW
 
 ## sesion 1
 
@@ -38,6 +38,7 @@ Proyecto "maps" Sesión 1 – Insertar un mapa. Para practias 1ºDAW
 - [https://chatgpt.com/]
 - [https://developers.google.com/maps/documentation/javascript/examples/map-simple#maps_map_simple-html]
 - [https://codepen.io/carlostessier-1472587534/pen/WbbBEvR]
+- [https://www.flaticon.com/]
  
  **Decisiones tecnicas**
  - [las 4 ubicaciones de cada ciudad y los iconos que pondriamos para las ubicaciones]
