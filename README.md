@@ -26,7 +26,7 @@ Proyecto "maps" Sesión 1 – Insertar un mapa. Para practias 1ºDAW
  ## sesion 2
 
 **Resumen:**
-[Hemos creado el formulario para seleccionar las ciudades y que al indicar la localización se redireccione con zoom y muestre en el mapa lugares de esas ciudades que elegimos nosotros que añadimos en arrays]
+[Hemos creado el formulario para seleccionar las ciudades y que al indicar la localización se redireccione con zoom y muestre en el mapa lugares de esas ciudades que elegimos nosotros que añadimos en arrays y nos muestra unos iconos encima de las ubicaciones del array que los diferencian y acordes al tipo que pertenezcan]
 
 **Dificultades encontradas**
 - [Dificultad 1: Poner los iconos en el mapa]
