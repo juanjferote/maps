@@ -25,9 +25,6 @@ document.getElementById("ciudad").addEventListener('change', function() {
     case "tokio":
         ciudadSeleccionada = { lat: 35.6895, lng: 139.6917}
         break;
-    default:
-        ciudadSeleccionada = { lat: 40.4165, lng: -3.70256}
-        break;
     }
     map.panTo(ciudadSeleccionada);
     map.setZoom(12)
