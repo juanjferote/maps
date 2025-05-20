@@ -135,7 +135,7 @@ function initMap() {
             case "tokio":
                 ciudadSeleccionada = { lat: 35.6895, lng: 139.6917 };
                 lugaresInteres = ubicacionesTokio;
-                map.setZoom(8);
+                map.setZoom(11);
                 break;
         }
         
