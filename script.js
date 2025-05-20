@@ -36,7 +36,8 @@ function initMap() {
     });
 
 document.getElementById("ciudad").addEventListener('change', function() {
-    const ciudad = document.getElementById("ciudad").value
+    const ciudad = document.getElementById("ciudad").value;
+    document.body.classList.add('city-selected');
     var ciudadSeleccionada
     switch (ciudad) {
     case "leon":
