@@ -63,6 +63,90 @@ body.city-selected #ciudad {
     font-size: 0.9rem;
 }
 
+/* Estilos para el botón de la leyenda */
+.btn-leyenda {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #4a6fa5;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+}
+
+.btn-leyenda:hover {
+    background-color: #3a5a80;
+}
+
+/* Estilos para la leyenda */
+#leyenda {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 1000;
+    width: 200px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#leyenda h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    color: #4facfe;
+}
+
+#contenido-leyenda {
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.item-leyenda {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.item-leyenda {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.item-leyenda img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    object-fit: contain;
+}
+
+.item-leyenda span {
+    color: white;
+    font-size: 0.9rem;
+}
+
+.leyenda-oculta {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+}
+
+.leyenda-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
 label {
     display: block;
     margin-bottom: 1.5rem;
