@@ -47,7 +47,7 @@ var ubicacionesBogota = [
 var ubicacionesVarsovia = [
     {
         nombre: "Plaza del Mercado",
-        coords: [52.249431, 21.012268] // Rynek Starego Miasta
+        coords: [52.249431, 21.012268] 
     },
     {
         nombre: "Palacio de Cultura y Ciencia",
@@ -86,18 +86,53 @@ document.getElementById("ciudad").addEventListener('change', function() {
     switch (ciudad) {
     case "leon":
         ciudadSeleccionada = { lat: 42.60002, lng: -5.57032}
+        ubicacionesLeon.forEach(ubicacion => {
+            new google.maps.Marker({
+            position: { lat: ubicacion.coords[0], lng: ubicacion.coords[1] },
+            map: map,
+            title: ubicacion.nombre
+            });
+        });
         break; 
     case "dublin":
         ciudadSeleccionada = { lat: 53.3498, lng: -6.2603}
+        ubicacionesDublin.forEach(ubicacion => {
+            new google.maps.Marker({
+            position: { lat: ubicacion.coords[0], lng: ubicacion.coords[1] },
+            map: map,
+            title: ubicacion.nombre
+            });
+        });
         break;
     case "bogota":
         ciudadSeleccionada = { lat: 4.7110, lng: -74.0721}
+        ubicacionesBogota.forEach(ubicacion => {
+            new google.maps.Marker({
+            position: { lat: ubicacion.coords[0], lng: ubicacion.coords[1] },
+            map: map,
+            title: ubicacion.nombre
+            });
+        });
         break;
     case "varsovia":
         ciudadSeleccionada = { lat: 52.2297, lng: 21.0122}
+        ubicacionesVarsovia.forEach(ubicacion => {
+            new google.maps.Marker({
+            position: { lat: ubicacion.coords[0], lng: ubicacion.coords[1] },
+            map: map,
+            title: ubicacion.nombre
+            });
+        });
         break;
     case "tokio":
         ciudadSeleccionada = { lat: 35.6895, lng: 139.6917}
+        ubicacionesTokio.forEach(ubicacion => {
+            new google.maps.Marker({
+            position: { lat: ubicacion.coords[0], lng: ubicacion.coords[1] },
+            map: map,
+            title: ubicacion.nombre
+            });
+        });
         break;
     }
     map.panTo(ciudadSeleccionada);
