@@ -13,18 +13,16 @@
   </head>
   <body>
     <label for="pais">País:</label>
-      <select id="pais" name="pais" required>
-        <option value="">--Selecciona--</option>
-        <option value="mexico">México</option>
-        <option value="argentina">Argentina</option>
-        <option value="colombia">Colombia</option>
-        <option value="españa">España</option>
+      <select id="ciudad" name="ciudad" required>
+        <option value="">Selecciona una ciudad:</option>
+        <option value="leon">León</option>
+        <option value="dublin">Dublín</option>
+        <option value="bogota">Bogotá</option>
+        <option value="varsovia">Varsovia</option>
+        <option value="tokio">Tokio</option>
       </select>
       <br><br>
     <div id="map"></div>
-    
-
-    <!-- Script para inicializar el mapa -->
     <script>
       function initMap() {
         const map = new google.maps.Map(document.getElementById("map"), {
@@ -33,8 +31,6 @@
         });
       }
     </script>
-
-    <!-- Carga de la API de Google Maps con la clave -->
     <script async
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBkE25WUc7ApIr8wSsvSq6rjAfRehZYZk&callback=initMap">
     </script>
