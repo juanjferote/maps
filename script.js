@@ -73,16 +73,13 @@ document.getElementById("ciudad").addEventListener('change', function() {
         position: { lat: ubicacion.coords[0], lng: ubicacion.coords[1] },
         map: map,
         title: ubicacion.nombre,
-        icon: ubicacion.icono
+        icon: {
+            url: ubicacion.icono,
+            scaledSize: new google.maps.Size(32, 32)
+        }
         });
     });
     map.panTo(ciudadSeleccionada);
     map.setZoom(12)
   });
 }
-
-
-
-    
-    
-
