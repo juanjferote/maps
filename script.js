@@ -15,17 +15,17 @@ var ubicacionesDublin = [
 ];
 
 var ubicacionesBogota = [
-    { nombre: "Monserrate", coords: [4.605260, -74.055561], icono: "images/iglesia.png" },
-    { nombre: "Plaza de Bolívar", coords: [4.598056, -74.076111], icono: "images/plaza.png" },
-    { nombre: "Estadio El Campín", coords: [4.645278, -74.093611], icono: "images/estadio.png" },
-    { nombre: "Museo de Botero", coords: [4.598333, -74.075833], icono: "images/museo.png" }
+    { nombre: "Monserrate", coords: [4.606378566303521, -74.05558987301566], icono: "images/iglesia.png" },
+    { nombre: "Plaza de Bolívar", coords: [4.5981923872131, -74.07543613370576], icono: "images/plaza.png" },
+    { nombre: "Estadio El Campín", coords: [4.645725805590935, -74.07779746254174], icono: "images/estadio.png" },
+    { nombre: "Museo de Botero", coords: [4.596984589060866, -74.07332663788708], icono: "images/museo.png" }
 ];
 
 var ubicacionesVarsovia = [
     { nombre: "Cathedral St. Mary Magdalene", coords: [52.25481, 21.03324], icono: "images/iglesia.png" },
-    { nombre: "Market Square", coords: [52.231838, 21.006592], icono: "images/plaza.png" },
-    { nombre: "National Stadium of Warsaw", coords: [52.2370, 21.0407], icono: "images/estadio.png" },
-    { nombre: "Museum of Fryderyk Chopin", coords: [52.231111, 21.021111], icono: "images/museo.png" }
+    { nombre: "Historical center", coords: [52.231838, 21.006592], icono: "images/plaza.png" },
+    { nombre: "National Stadium of Warsaw", coords: [52.239403952169766, 21.04532875473575], icono: "images/estadio.png" },
+    { nombre: "Museum of Fryderyk Chopin", coords: [52.23662508685545, 21.022837937296977], icono: "images/museo.png" }
 ];
 
 var ubicacionesTokio = [
