@@ -29,5 +29,4 @@ document.getElementById("ciudad").addEventListener('change', function() {
     map.panTo(ciudadSeleccionada);
     map.setZoom(12)
   });
-  
 }
