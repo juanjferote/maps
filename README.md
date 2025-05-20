@@ -32,7 +32,7 @@ Proyecto "maps" Sesión 1 – Insertar un mapa. Para practias 1ºDAW
 - [Dificultad 1: Poner los iconos personalizados en el mapa utilizando emojis]
 
 **Soluciones aplicadas:**^
-- [Solución 1: Descargar las imágenes y almacenarlas en una carpeta]
+- [Solución 1: Descargar las imágenes y almacenarlas en una carpeta, lo cual permite la personalización de los iconos]
 
 **Fuentes consultadas**
 - [https://chatgpt.com/]
