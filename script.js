@@ -3,15 +3,15 @@ let map;
 var ubicacionesLeon = [
     { nombre: "Catedral de León", coords: [42.599444, -5.566667], icono: "images/iglesia.png" },
     { nombre: "Plaza del Grano", coords: [42.598444, -5.570722], icono: "images/plaza.png" },
-    { nombre: "Estadio Reino de León", coords: [42.601806, -5.582111], icono: "images/estadio.png" },
+    { nombre: "Estadio Reino de León", coords: [42.5875, -5.5767], icono: "images/estadio.png" },
     { nombre: "MUSAC", coords: [42.603333, -5.586944], icono: "images/museo.png" }
 ];
 
 var ubicacionesDublin = [
-    { nombre: "Saint Patrick's Cathedral", coords: [53.339444, -6.271944], icono: "images/iglesia.png" },
-    { nombre: "Guinness Storehouse", coords: [53.341857, -6.286003], icono: "images/museo.png" },
-    { nombre: "Merrion Square", coords: [53.3441, -6.2576], icono: "images/plaza.png" },
-    { nombre: "Estadio Aviva Dublin", coords: [53.3351, -6.2285], icono: "images/estadio.png" }
+    { nombre: "Saint Patrick's Cathedral", coords: [53.3395, -6.2722], icono: "images/iglesia.png" },
+    { nombre: "Guinness Storehouse", coords: [53.34185, -6.28674], icono: "images/museo.png" },
+    { nombre: "Merrion Square", coords: [53.339657, -6.249165], icono: "images/plaza.png" },
+    { nombre: "Aviva Stadium", coords: [53.335139, -6.228333], icono: "images/estadio.png" }
 ];
 
 var ubicacionesBogota = [
@@ -22,18 +22,19 @@ var ubicacionesBogota = [
 ];
 
 var ubicacionesVarsovia = [
-    { nombre: "Catedral St. Mary Magdalene", coords: [52.249431, 21.012268], icono: "images/iglesia.png" },
-    { nombre: "Plaza del Mercado de Varsovia", coords: [52.231838, 21.006592], icono: "images/plaza.png" },
-    { nombre: "Estadio Nacional de Varsovia", coords: [52.239444, 21.045278], icono: "images/estadio.png" },
-    { nombre: "Museo de Chopin", coords: [52.231111, 21.021111], icono: "images/museo.png" }
+    { nombre: "Cathedral St. Mary Magdalene", coords: [52.25481, 21.03324], icono: "images/iglesia.png" },
+    { nombre: "Market Square", coords: [52.231838, 21.006592], icono: "images/plaza.png" },
+    { nombre: "National Stadium of Warsaw", coords: [52.2370, 21.0407], icono: "images/estadio.png" },
+    { nombre: "Museum of Fryderyk Chopin", coords: [52.231111, 21.021111], icono: "images/museo.png" }
 ];
 
 var ubicacionesTokio = [
-    { nombre: "Templo de Tokio", coords: [35.6585805, 139.7454329], icono: "images/iglesia.png" },
-    { nombre: "Paso Peatonal de Shibuya", coords: [35.6595, 139.7006], icono: "images/plaza.png" },
-    { nombre: "Estadio Olímpico de Tokio", coords: [35.6785, 139.7141], icono: "images/estadio.png"},
-    { nombre: "Museo Nacional de Tokio", coords: [35.7188, 139.7766], icono: "images/museo.png" }
+    { nombre: "Senso-ji Temple", coords: [35.714765, 139.796655], icono: "images/iglesia.png" },
+    { nombre: "Shibuya Scramble Crossing", coords: [35.6595, 139.7006], icono: "images/plaza.png" },
+    { nombre: "Olimpic Stadium of Tokio", coords: [35.6785, 139.7141], icono: "images/estadio.png" },
+    { nombre: "National Museum of Tokio", coords: [35.7188, 139.7766], icono: "images/museo.png" }
 ];
+
 
 // Función para actualizar la leyenda
 function actualizarLeyenda() {
@@ -114,22 +115,27 @@ function initMap() {
             case "leon":
                 ciudadSeleccionada = { lat: 42.60002, lng: -5.57032 };
                 lugaresInteres = ubicacionesLeon;
+                map.setZoom(15);
                 break; 
             case "dublin":
                 ciudadSeleccionada = { lat: 53.3498, lng: -6.2603 };
                 lugaresInteres = ubicacionesDublin;
+                map.setZoom(13);
                 break;
             case "bogota":
                 ciudadSeleccionada = { lat: 4.7110, lng: -74.0721 };
                 lugaresInteres = ubicacionesBogota;
+                map.setZoom(12);
                 break;
             case "varsovia":
                 ciudadSeleccionada = { lat: 52.2297, lng: 21.0122 };
                 lugaresInteres = ubicacionesVarsovia;
+                map.setZoom(13);
                 break;
             case "tokio":
                 ciudadSeleccionada = { lat: 35.6895, lng: 139.6917 };
                 lugaresInteres = ubicacionesTokio;
+                map.setZoom(8);
                 break;
         }
         
@@ -152,7 +158,6 @@ function initMap() {
         
         // Mover el mapa a la ubicación seleccionada
         map.panTo(ciudadSeleccionada);
-        map.setZoom(12);
         
         // Mostrar la leyenda automáticamente al seleccionar una ciudad
         const leyenda = document.getElementById('leyenda');
