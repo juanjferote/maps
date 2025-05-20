@@ -23,7 +23,7 @@ html, body {
     background: #00000057; /* Green color */
     padding: 2rem;
     width: 300px;
-    height: 300px;
+    height: 150px;
     display: flex;
     flex-direction: column;
     justify-content: center;
