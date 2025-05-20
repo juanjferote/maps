@@ -1,10 +1,10 @@
 let map;
 
 var ubicacionesLeon = [
-    { nombre: "Catedral de León", coords: [42.599444, -5.566667], icono: "images/iglesia.png" },
-    { nombre: "Plaza del Grano", coords: [42.598444, -5.570722], icono: "images/plaza.png" },
-    { nombre: "Estadio Reino de León", coords: [42.5875, -5.5767], icono: "images/estadio.png" },
-    { nombre: "MUSAC", coords: [42.603333, -5.586944], icono: "images/museo.png" }
+    { nombre: "Catedral de León", coords: [42.599643606773895, -5.567184660469084], icono: "images/iglesia.png" },
+    { nombre: "Plaza del Grano", coords: [42.595544931965605, -5.56841810279765], icono: "images/plaza.png" },
+    { nombre: "Estadio Reino de León", coords: [42.58891201340594, -5.576691556876203], icono: "images/estadio.png" },
+    { nombre: "MUSAC", coords: [42.607277678543824, -5.582964002797232], icono: "images/museo.png" }
 ];
 
 var ubicacionesDublin = [
@@ -29,10 +29,10 @@ var ubicacionesVarsovia = [
 ];
 
 var ubicacionesTokio = [
-    { nombre: "Senso-ji Temple", coords: [35.714765, 139.796655], icono: "images/iglesia.png" },
-    { nombre: "Shibuya Scramble Crossing", coords: [35.6595, 139.7006], icono: "images/plaza.png" },
-    { nombre: "Olimpic Stadium of Tokio", coords: [35.6785, 139.7141], icono: "images/estadio.png" },
-    { nombre: "National Museum of Tokio", coords: [35.7188, 139.7766], icono: "images/museo.png" }
+    { nombre: "Senso-ji Temple", coords: [35.71482050856725, 139.79666224235504], icono: "images/iglesia.png" },
+    { nombre: "Shibuya Scramble Crossing", coords: [35.65966496159635, 139.70058103807585], icono: "images/plaza.png" },
+    { nombre: "Olimpic Stadium of Tokio", coords: [35.679043551321655, 139.71790415673533], icono: "images/estadio.png" },
+    { nombre: "National Museum of Tokio", coords: [35.71902663599932, 139.7765858534329], icono: "images/museo.png" }
 ];
 
 
