@@ -1,6 +1,88 @@
+
+    var ubicacionesLeon = [
+        {
+            nombre: "Catedral de León",
+            coords: [42.599444, -5.566667]
+        },
+        {
+            nombre: "Casa Botines",
+            coords: [42.598444, -5.570722]
+        },
+        {
+            nombre: "Convento de San Marcos",
+            coords: [42.601806, -5.582111]
+        }
+    ];
+
+    var ubicacionesDublin = [
+        {
+            nombre: "General Post Office",
+            coords: [53.349805, -6.26031]
+        },
+        {
+            nombre: "Guinness Storehouse",
+            coords: [53.341857, -6.286003]
+        },
+        {
+            nombre: "Trinity College",
+            coords: [53.3441, -6.2576]
+        }
+    ];
+
+    var ubicacionesBogota = [
+        {
+            nombre: "Monserrate",
+            coords: [4.605260, -74.055561]
+        },
+        {
+            nombre: "Betel",
+            coords: [4.577500, -74.130600]
+        },
+        {
+            nombre: "Jardín Botánico",
+            coords: [4.658400, -74.093500]
+        }
+    ];
+
+    var ubicacionesVarsovia = [
+        {
+            nombre: "Plaza del Mercado",
+            coords: [52.249431, 21.012268] // Rynek Starego Miasta
+        },
+        {
+            nombre: "Palacio de Cultura y Ciencia",
+            coords: [52.231838, 21.006592]
+        },
+        {
+            nombre: "Palacio de Wilanów",
+            coords: [52.165367, 21.089199]
+        }
+    ];
+
+    var ubicacionesTokio = [
+        {
+            nombre: "Torre de Tokio",
+            coords: [35.6585805, 139.7454329]
+        },
+        {
+            nombre: "Palacio Imperial",
+            coords: [35.685175, 139.752799]
+        },
+        {
+            nombre: "Templo Senso-ji",
+            coords: [35.714765, 139.796655]
+        }
+    ];
+
 function initMap() {
     const map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 40.4165, lng: -3.70256 },
     zoom: 8,
     });
 }
+
+
+
+    
+    
+
