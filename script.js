@@ -1,10 +1,10 @@
 let map;
 
 var ubicacionesLeon = [
-    { nombre: "Catedral de León", coords: [42.599444, -5.566667], icono: "images/iglesia.png" },
-    { nombre: "Plaza del Grano", coords: [42.598444, -5.570722], icono: "images/plaza.png" },
-    { nombre: "Estadio Reino de León", coords: [42.5875, -5.5767], icono: "images/estadio.png" },
-    { nombre: "MUSAC", coords: [42.603333, -5.586944], icono: "images/museo.png" }
+    { nombre: "Catedral de León", coords: [42.59961991423942, -5.567098829782704], icono: "images/iglesia.png" },
+    { nombre: "Plaza del Grano", coords: [42.595410928145235, -5.568417560127307], icono: "images/plaza.png" },
+    { nombre: "Estadio Reino de León", coords: [42.58761353667463, -5.576583561587189], icono: "images/estadio.png" },
+    { nombre: "MUSAC", coords: [42.60697440040134, -5.582962423965287], icono: "images/museo.png" }
 ];
 
 var ubicacionesDublin = [
@@ -15,24 +15,24 @@ var ubicacionesDublin = [
 ];
 
 var ubicacionesBogota = [
-    { nombre: "Monserrate", coords: [4.605260, -74.055561], icono: "images/iglesia.png" },
-    { nombre: "Plaza de Bolívar", coords: [4.598056, -74.076111], icono: "images/plaza.png" },
-    { nombre: "Estadio El Campín", coords: [4.645278, -74.093611], icono: "images/estadio.png" },
-    { nombre: "Museo de Botero", coords: [4.598333, -74.075833], icono: "images/museo.png" }
+    { nombre: "Monserrate", coords: [4.606699126924952, -74.05513964042271], icono: "images/iglesia.png" },
+    { nombre: "Plaza de Bolívar", coords: [4.59816067597575, -74.07599749207081], icono: "images/plaza.png" },
+    { nombre: "Estadio El Campín", coords: [4.645822047844, -74.07781891890838], icono: "images/estadio.png" },
+    { nombre: "Museo de Botero", coords: [4.59672752857818, -74.07327300667124], icono: "images/museo.png" }
 ];
 
 var ubicacionesVarsovia = [
     { nombre: "Katedra Metropolitalna Św. Marii Magdaleny - Metropolitan Cathedral St. Mary Magdalene", coords: [52.25501443674027, 21.033250106658432], icono: "images/iglesia.png" },
     { nombre: "Plac Zamkowy - Market Square", coords: [52.247894295777876, 21.01379869311569], icono: "images/plaza.png" },
-    { nombre: "PGE Narodowy Warszawy - National Stadium of Warsaw", coords: [52.2370, 21.0407], icono: "images/estadio.png" },
-    { nombre: "Muzeum Fryderyka Chopina - Museum of Fryderyk Chopin", coords: [52.231111, 21.021111], icono: "images/museo.png" }
+    { nombre: "PGE Narodowy Warszawy - National Stadium of Warsaw", coords: [52.23936059137798, 21.04528155342873], icono: "images/estadio.png" },
+    { nombre: "Muzeum Fryderyka Chopina - Museum of Fryderyk Chopin", coords: [52.236631584877316, 21.023127604089623], icono: "images/museo.png" }
 ];
 
 var ubicacionesTokio = [
-    { nombre: "浅草寺 - Senso-ji Temple", coords: [35.714765, 139.796655], icono: "images/iglesia.png" },
-    { nombre: "渋谷スクランブル交差点 - Shibuya Scramble Crossing", coords: [35.6595, 139.7006], icono: "images/plaza.png" },
-    { nombre: "国立競技場 - National Stadium of Japan", coords: [35.6785, 139.7141], icono: "images/estadio.png" },
-    { nombre: "国立博物館 - National Museum of Tokio", coords: [35.7188, 139.7766], icono: "images/museo.png" }
+    { nombre: "浅草寺 - Senso-ji Temple", coords: [35.71485960866646, 139.79669760223402], icono: "images/iglesia.png" },
+    { nombre: "渋谷スクランブル交差点 - Shibuya Scramble Crossing", coords: [35.65963888089483, 139.70064542764422], icono: "images/plaza.png" },
+    { nombre: "国立競技場 - National Stadium of Japan", coords: [35.67801580529732, 139.71455162579443], icono: "images/estadio.png" },
+    { nombre: "国立博物館 - National Museum of Tokio", coords: [35.719009285435135, 139.777347617316], icono: "images/museo.png" }
 ];
 
 
