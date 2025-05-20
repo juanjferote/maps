@@ -4,12 +4,12 @@ Proyecto "maps" Sesión 1 – Insertar un mapa. Para practicas 1ºDAW
 ## sesion 1
 
 **Resumen:**
-[Nos hemos registrado en Google Cloud Platform, hemos implementado el mapa y tambien habilitamos Maps JavaScript API para podeer interactuar con el mapa]
+[Nos hemos registrado en Google Cloud Platform, hemos implementado el mapa y también habilitamos Maps JavaScript API para poder interactuar con el mapa]
 
 **Dificultades encontradas**
-- [Dificultad 1: Para registrarnos tuvimos problemas por que nos pedia una tarjeta pero lo pudimos resolver al final despues de varios intentos]
+- [Dificultad 1: Para registrarnos tuvimos problemas porque nos pedía una tarjeta, pero lo pudimos resolver después de varios intentos]
 
-**Soluciones aplicadas:**^
+**Soluciones aplicadas:**
 - [Investigamos en paginas web e inteligencias artificiales]
 
 **Fuentes consultadas**
@@ -17,7 +17,7 @@ Proyecto "maps" Sesión 1 – Insertar un mapa. Para practicas 1ºDAW
 - [https://codepen.io/carlostessier-1472587534/pen/WbbBEvR]
  
  **Decisiones tecnicas**
- - [Ninguna decision de momento]
+ - [Ninguna decisión de momento]
 
 
  *Ideas de mejora futura:*
@@ -26,10 +26,10 @@ Proyecto "maps" Sesión 1 – Insertar un mapa. Para practicas 1ºDAW
  ## sesion 2
 
 **Resumen:**
-[Hemos creado el formulario para seleccionar las ciudades y que al indicar la localización se redireccione con zoom y muestre en el mapa lugares de esas ciudades que elegimos nosotros que añadimos en arrays y nos muestra unos iconos encima de las ubicaciones del array que los diferencian y acordes al tipo que pertenezcan]
+[Hemos creado el formulario para seleccionar las ciudades. Al indicar la localización se redirecciona con zoom y muestra en el mapa los lugares de esas ciudades que hemos elegido y que añadimos en arrays. También hemos creado una leyenda que nos muestra el tipo de lugar que hay en el mapa con su correspondiente pictograma y hemos añadido ubicaciones exactas y nombres en lenguajes originales e inglés]
 
 **Dificultades encontradas**
-- [Dificultad 1: Poner los iconos personalizados en el mapa utilizando emojis]
+- [Dificultad 1: Poner los iconos personalizados en el mapa]
 
 **Soluciones aplicadas:**^
 - [Solución 1: Descargar las imágenes y almacenarlas en una carpeta, lo cual permite la personalización de los iconos]
@@ -39,9 +39,10 @@ Proyecto "maps" Sesión 1 – Insertar un mapa. Para practicas 1ºDAW
 - [https://developers.google.com/maps/documentation/javascript/examples/map-simple#maps_map_simple-html]
 - [https://codepen.io/carlostessier-1472587534/pen/WbbBEvR]
 - [https://www.flaticon.com/]
+- [https://www.google.es/maps]
  
  **Decisiones tecnicas**
- - [las 4 ubicaciones de cada ciudad y los iconos que pondriamos para las ubicaciones]
+ - [las 4 ubicaciones de cada ciudad y los iconos que pondríamos para las ubicaciones]
 
 
  *Ideas de mejora futura:*
