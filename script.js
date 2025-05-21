@@ -180,10 +180,6 @@ function initMap() {
     const toggleHistorialBtn = document.getElementById('toggleHistorial');
     let historialVisible = false;
 
-    function borrarHistorial() {
-    
-    }
-
     // Función para actualizar la visualización del historial
     function actualizarHistorial() {
         listaDirecciones.innerHTML = '';
@@ -254,6 +250,11 @@ function initMap() {
     function eliminarDelHistorial(index) {
         historialDirecciones.splice(index, 1);
         localStorage.setItem('historialDirecciones', JSON.stringify(historialDirecciones));
+        actualizarHistorial();
+    }
+
+    function borrarHistorial() {
+        historialDirecciones.splice(0, historialDirecciones.length);
         actualizarHistorial();
     }
 
