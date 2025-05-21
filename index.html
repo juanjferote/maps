@@ -8,23 +8,55 @@
     <link rel="icon" href="images/icono.png" type="i"/>
   </head>
   <body>
-    <div id="form-container">
-      <label for="ciudad">Selecciona una ciudad:</label>
-      <select id="ciudad" name="ciudad" required>
-        <option value="" disabled selected>Elige una ciudad</option>
-        <option value="leon">León</option>
-        <option value="dublin">Dublín</option>
-        <option value="bogota">Bogotá</option>
-        <option value="varsovia">Varsovia</option>
-        <option value="tokio">Tokio</option>
-      </select>
-      <input type="text" name="direccion" id="direccion" placeholder="Introduce una dirección">
-      <table>
-        <tr>
-          <td><button id="buscarDireccion" class="btn">Buscar dirección</button></td>
-          <td><button id="toggleLeyenda" class="btn">Mostrar Leyenda</button></td>
-        </tr>
-      </table>
+    <div id="form-container" class="centered">
+        <div id="form-content" style="overflow-y: auto; max-height: 500px; padding: 20px; border: 1px solid #ccc; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+            <div class="form-section">
+                <label for="ciudad">Selecciona una ciudad</label>
+                <select id="ciudad">
+                    <option value="">Elige una ciudad:</option>
+                    <option value="leon">León</option>
+                    <option value="dublin">Dublín</option>
+                    <option value="bogota">Bogotá</option>
+                    <option value="varsovia">Varsovia</option>
+                    <option value="tokio">Tokio</option>
+                </select>
+            </div>
+            
+            <div class="separator">
+                <span>o</span>
+            </div>
+            
+            <div class="form-section">
+                <h3>Buscar por dirección</h3>
+                <div class="form-group">
+                    <input type="text" id="direccion" placeholder="Escribe una dirección" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <select id="categoria" class="category-select">
+                        <option value="">Marcador</option>
+                        <option value="plaza">Plaza</option>
+                        <option value="iglesia">Monumento Religioso</option>
+                        <option value="estadio">Estadio</option>
+                        <option value="museo">Museo</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button id="buscarDireccion" class="btn">Buscar dirección</button>
+                    <button id="toggleHistorial" class="btn btn-outline" style="margin-top: 10px;">
+                        Ver historial de direcciones
+                    </button>
+                    <button id="borrarHistorial" class="btn" style="display: none;">Borrar historial de direcciones</button>
+                </div>
+                <div id="historialDirecciones" class="historial-contenedor">
+                    <h4>Direcciones guardadas:</h4>
+                    <ul id="listaDirecciones">
+                    </ul>
+                </div>
+                <div class="form-actions" style="margin-top: 15px;">
+                    <button id="toggleLeyenda" class="btn">Mostrar Leyenda</button>
+                </div>
+            </div>
+        </div>
     </div>
     <div id="leyenda" class="leyenda-oculta">
       <h3>Leyenda</h3>
