@@ -121,6 +121,8 @@ function limpiarBusqueda() {
     }
 }
 
+
+
 // Función para agregar un marcador personalizado
 function agregarMarcadorPersonalizado(ubicacion, esPersonalizado = true) {
     const marker = new google.maps.Marker({
@@ -178,6 +180,10 @@ function initMap() {
     const toggleHistorialBtn = document.getElementById('toggleHistorial');
     let historialVisible = false;
 
+    function borrarHistorial() {
+    
+    }
+
     // Función para actualizar la visualización del historial
     function actualizarHistorial() {
         listaDirecciones.innerHTML = '';
@@ -185,12 +191,16 @@ function initMap() {
         // Mostrar mensaje si no hay direcciones
         if (historialDirecciones.length === 0) {
             const mensaje = document.createElement('div');
+            document.getElementById("borrarHistorial").style.display = "none"
             mensaje.className = 'sin-resultados';
             mensaje.textContent = 'No hay direcciones guardadas';
             listaDirecciones.appendChild(mensaje);
             return;
         }
-        
+        else {
+            document.getElementById("borrarHistorial").style.display = "block"
+        }
+
         historialDirecciones.forEach((item, index) => {
             const li = document.createElement('li');
             li.textContent = item.direccion;
@@ -282,6 +292,11 @@ function initMap() {
             historialContainer.style.display = 'none';
             toggleHistorialBtn.textContent = 'Ver historial de direcciones';
         }
+    });
+
+    //Botón que elimina todas las búsquedas del historial
+    document.getElementById("borrarHistorial").addEventListener("click", function() {
+        borrarHistorial();
     });
 
     // Función que busca una dirección y obtiene sus coordenadas cuando se pulsa el botón
@@ -403,7 +418,7 @@ function initMap() {
         // Actualizar la leyenda
         actualizarLeyenda();
         
-         map.panTo(ciudadSeleccionada);
+        map.panTo(ciudadSeleccionada);
     
     });
 }
