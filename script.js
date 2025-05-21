@@ -1,5 +1,7 @@
 let map;
 
+const direccion = document.getElementById("direccion").value;
+
 var ubicacionesLeon = [
     { nombre: "Catedral de León", coords: [42.59943637274811, -5.567163096813226], icono: "images/iglesia.png" },
     { nombre: "Plaza del Grano", coords: [42.595410928145235, -5.568417560127307], icono: "images/plaza.png" },
@@ -126,21 +128,11 @@ function limpiarBusqueda() {
 }
 
 // Función para geocodificar una dirección
-function geocodeAddress(address, callback) {
-    const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ 'address': address }, function(results, status) {
-        if (status === 'OK') {
-            const location = results[0].geometry.location;
-            callback({
-                lat: location.lat(),
-                lng: location.lng()
-            });
-        } else {
-            alert('No se pudo encontrar la dirección: ' + status);
-            callback(null);
-        }
-    });
-}
+document.getElementById("buscarDireccion").addEventListener("click", function() {
+    obtenerCoordenadas(direccion);
+});
+
+
 
 // Función para agregar un marcador personalizado
 function agregarMarcadorPersonalizado(ubicacion, esPersonalizado = true) {
@@ -189,59 +181,10 @@ function initMap() {
         toggleBtn.addEventListener('click', toggleLeyenda);
     }
     
-    // Configurar el botón de búsqueda de dirección
-    const buscarBtn = document.getElementById('buscarDireccion');
-    if (buscarBtn) {
-        buscarBtn.addEventListener('click', function() {
-            const direccion = document.getElementById('direccion').value;
-            const categoria = document.getElementById('categoria').value;
-            
-            if (!direccion) {
-                mostrarError('Por favor, introduce una dirección');
-                return;
-            }
-            
-            if (!categoria) {
-                mostrarError('Por favor, selecciona una categoría');
-                return;
-            }
-            
-            // Mostrar indicador de carga
-            const btnOriginalText = buscarBtn.textContent;
-            buscarBtn.disabled = true;
-            buscarBtn.innerHTML = '<span class="spinner">Buscando...</span>';
-            
-            geocodeAddress(direccion, (coords) => {
-                // Restaurar el botón
-                buscarBtn.disabled = false;
-                buscarBtn.textContent = btnOriginalText;
-                
-                if (coords) {
-                    // Limpiar marcadores anteriores de búsqueda
-                    if (window.busquedaMarker) {
-                        window.busquedaMarker.setMap(null);
-                    }
-                    
-                    // Crear marcador para la dirección buscada
-                    window.busquedaMarker = agregarMarcadorPersonalizado({
-                        nombre: direccion,
-                        coords: [coords.lat, coords.lng],
-                        icono: `images/${categoria}.png`
-                    }, true);
-                    
-                    // Centrar el mapa en la nueva ubicación
-                    map.panTo({ lat: coords.lat, lng: coords.lng });
-                    map.setZoom(15);
-                    
-                    // Mostrar notificación de éxito
-                    mostrarExito('Ubicación encontrada');
-                }
-            });
-        });
-    }
+    
     
     // Cargar la leyenda inicialmente (pero mantenerla oculta)
-    actualizarLeyenda();
+    actualizarLeyenda()
 
     document.getElementById("ciudad").addEventListener('change', function() {
         const ciudad = document.getElementById("ciudad").value;
