@@ -23,6 +23,7 @@ Proyecto "maps" Sesión 1 – Insertar un mapa. Para practicas 1ºDAW
  *Ideas de mejora futura:*
  - [Agregar todas las funcionalidades y los estilos]
 
+
  ## sesion 2
 
 **Resumen:**
@@ -46,4 +47,31 @@ Proyecto "maps" Sesión 1 – Insertar un mapa. Para practicas 1ºDAW
 
 
  *Ideas de mejora futura:*
- - [Agregar mas funcionalidades y mas estilos]
+ - [Agregar más funcionalidades y más estilos]
+
+
+ ## sesion 3
+
+**Resumen:**
+[Se ha creado una barra de búsqueda que nos permite buscar direcciones y mostrarlas en el mapa con un marcador personalizado. También se ha creado una lista de direcciones que se almacena en localStorage y se muestra en una lista desplegable. Se han añadido las opciones de eliminar el historial por completo o eliminar simplemente una busqueda, además de que se han añadido estilos para hacer que tanto el mapa como el formulario encajen bien en la página. Implementa un mensaje si no se ha añadido nada a la hora de la búsqueda o si la búsqueda no ha encontrado nada]
+
+**Dificultades encontradas**
+- [Dificultad 1: Instalar la API de Google Maps]
+
+**Soluciones aplicadas:**^
+- [Solución 1: Descargar otra API diferente a la de Google Maps]
+
+**Fuentes consultadas**
+- [https://chatgpt.com/]
+- [https://developers.google.com/maps/documentation/javascript/examples/map-simple#maps_map_simple-html]
+- [https://codepen.io/carlostessier-1472587534/pen/WbbBEvR]
+- [https://www.flaticon.com/]
+- [https://www.google.es/maps]
+- [https://nominatim.org/]
+ 
+ **Decisiones tecnicas**
+ - [Icono personalizado y mejora de los estilos del formulario además del aviso para las búsquedas vacías e incorrectas]
+
+
+ *Ideas de mejora futura:*
+ - [Agregar más funcionalidades y más estilos]
