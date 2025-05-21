@@ -246,15 +246,17 @@ function initMap() {
         });
     }
 
-    // Función para eliminar una dirección del historial ( solo una)
+    // Función para eliminar una dirección del historial (solo una)
     function eliminarDelHistorial(index) {
         historialDirecciones.splice(index, 1);
         localStorage.setItem('historialDirecciones', JSON.stringify(historialDirecciones));
         actualizarHistorial();
     }
 
+    //Función que elimina todas las direcciones del historial
     function borrarHistorial() {
         historialDirecciones.splice(0, historialDirecciones.length);
+        localStorage.setItem('historialDirecciones', JSON.stringify(historialDirecciones));
         actualizarHistorial();
     }
 
@@ -302,17 +304,8 @@ function initMap() {
 
     // Función que busca una dirección y obtiene sus coordenadas cuando se pulsa el botón
     document.getElementById("buscarDireccion").addEventListener("click", function() {
-        const direccion = document.getElementById('direccion').value.trim();
-        const ciudad = document.getElementById('ciudad').value;
-        
-        if (!ciudad && !direccion) {
-            mostrarError('Por favor, selecciona una ciudad o ingresa una dirección para buscar.');
-            return;
-        }
-        
-        if (direccion) {
+        const direccion = document.getElementById('direccion').value;
             obtenerCoordenadas(direccion);
-        }
     });
 
     function obtenerCoordenadas(direccion) {
@@ -415,10 +408,7 @@ function initMap() {
         lugaresInteres.forEach(ubicacion => {
             agregarMarcadorPersonalizado(ubicacion, false);
         });
-        
-        // Actualizar la leyenda
-        actualizarLeyenda();
-        
+
         map.panTo(ciudadSeleccionada);
     
     });
