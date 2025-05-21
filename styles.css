@@ -154,28 +154,6 @@ label {
     font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 
-#ciudad {
-    width: 80%;
-    padding: 0.8rem;
-    font-size: 1.1rem;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    border-radius: 6px;
-    background-color: rgba(255, 255, 255, 0.9);
-    cursor: pointer;
-}
-
-#ciudad:focus {
-    outline: none;
-    border-color: white;
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
-}
-
-/* Style the dropdown options */
-#ciudad option, #categoria option {
-    padding: 8px;
-    background-color: white;
-    color: #333;
-}
 
 /* Form sections */
 .form-section {
