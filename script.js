@@ -40,15 +40,16 @@ var ubicacionesTokio = [
 function actualizarLeyenda() {
     const contenido = document.getElementById('contenido-leyenda');
     contenido.innerHTML = ''; // Limpiar contenido anterior
-    
+
     // Definir los tipos de lugares con sus imágenes locales
     const tiposLugares = [
         { tipo: 'Plazas', icono: 'images/plaza.png' },
         { tipo: 'Monumentos Religiosos', icono: 'images/iglesia.png' },
         { tipo: 'Estadios', icono: 'images/estadio.png' },
-        { tipo: 'Museos', icono: 'images/museo.png' }
+        { tipo: 'Museos', icono: 'images/museo.png' },
+        { tipo: 'Marcador', icono: 'images/mapa.png' } 
     ];
-    
+
     // Añadir cada tipo a la leyenda
     tiposLugares.forEach(tipo => {
         const item = document.createElement('div');
@@ -121,32 +122,57 @@ function limpiarBusqueda() {
     }
 }
 
+const iconosCategoria = {
+    plaza: 'images/plaza.png',
+    iglesia: 'images/iglesia.png',
+    estadio: 'images/estadio.png',
+    museo: 'images/museo.png',
+    marcador: 'images/mapa.png', // predeterminado
+    '': 'images/mapa.png' // por si acaso
+};
 
+// Añade este objeto global para guardar los marcadores personalizados por dirección
+window.marcadoresPersonalizados = {};
 
-// Función para agregar un marcador personalizado
-function agregarMarcadorPersonalizado(ubicacion, esPersonalizado = true) {
+// Modifica la función agregarMarcadorPersonalizado:
+function agregarMarcadorPersonalizado(ubicacion, esPersonalizado = true, iconoPersonalizado = null) {
+    // Elimina el marcador anterior de esta dirección si existe
+    if (esPersonalizado && window.marcadoresPersonalizados) {
+        const clave = ubicacion.nombre.trim().toLowerCase();
+        if (window.marcadoresPersonalizados[clave]) {
+            window.marcadoresPersonalizados[clave].setMap(null);
+            delete window.marcadoresPersonalizados[clave];
+        }
+    }
+
     const marker = new google.maps.Marker({
         position: { lat: ubicacion.coords[0], lng: ubicacion.coords[1] },
         map: map,
         title: ubicacion.nombre,
         icon: {
-            url: esPersonalizado ? 'images/star.png' : ubicacion.icono,
+            url: iconoPersonalizado || (esPersonalizado ? 'images/mapa.png' : ubicacion.icono),
             scaledSize: new google.maps.Size(32, 32)
         }
     });
-    
+
     // Crear ventana de información
     const infoWindow = new google.maps.InfoWindow({
         content: `<div><strong>${ubicacion.nombre}</strong>${esPersonalizado ? '<br>Ubicación personalizada' : ''}</div>`
     });
-    
-    // Mostrar infoWindow al hacer clic
+
     marker.addListener('click', () => {
         infoWindow.open(map, marker);
     });
-    
+
     if (!window.markers) window.markers = [];
     window.markers.push(marker);
+
+    // Guarda el marcador personalizado por dirección
+    if (esPersonalizado && window.marcadoresPersonalizados) {
+        const clave = ubicacion.nombre.trim().toLowerCase();
+        window.marcadoresPersonalizados[clave] = marker;
+    }
+
     return marker;
 }
 
@@ -180,10 +206,19 @@ function initMap() {
     const toggleHistorialBtn = document.getElementById('toggleHistorial');
     let historialVisible = false;
 
+    // Añadir array para marcadores de historial
+    window.historialMarkers = [];
+
     // Función para actualizar la visualización del historial
     function actualizarHistorial() {
         listaDirecciones.innerHTML = '';
-        
+
+        // Eliminar marcadores de historial anteriores
+        if (window.historialMarkers) {
+            window.historialMarkers.forEach(m => m.setMap(null));
+            window.historialMarkers = [];
+        }
+
         // Mostrar mensaje si no hay direcciones
         if (historialDirecciones.length === 0) {
             const mensaje = document.createElement('div');
@@ -201,8 +236,22 @@ function initMap() {
             const li = document.createElement('li');
             li.textContent = item.direccion;
             li.dataset.index = index;
-            
-            // Añadir botón de eliminar al lado de la ubi
+
+            // Usa el icono de la categoría guardada
+            const icono = iconosCategoria[item.categoria || 'marcador'];
+
+            const marker = new google.maps.Marker({
+                position: item.coordenadas,
+                map: map,
+                title: item.direccion,
+                icon: {
+                    url: icono,
+                    scaledSize: new google.maps.Size(32, 32)
+                }
+            });
+
+            window.historialMarkers.push(marker);
+
             const span = document.createElement('span');
             span.className = 'borrar-direccion';
             span.innerHTML = '&times;';
@@ -210,38 +259,33 @@ function initMap() {
                 e.stopPropagation();
                 eliminarDelHistorial(index);
             };
-            
+
             li.appendChild(span);
-            
+
             // Al hacer clic en una dirección del historial
             li.onclick = () => {
                 const direccion = item.direccion;
                 const direccionInput = document.getElementById('direccion');
                 direccionInput.value = direccion;
-                
-                // Mover el formulario a la esquina
+
                 document.body.classList.add('search-performed');
                 document.body.classList.add('city-selected');
-                
-                // Usar las coordenadas guardadas en lugar de hacer una nueva búsqueda
+
                 map.setCenter(item.coordenadas);
-                
-                // Limpiar marcadores anteriores
+
                 if (window.markers) {
                     window.markers.forEach(marker => marker.setMap(null));
                     window.markers = [];
                 }
-                
-                // Agregar el marcador de la dirección seleccionada
-                agregarMarcadorPersonalizado({ 
-                    nombre: direccion, 
-                    coords: [item.coordenadas.lat, item.coordenadas.lng] 
-                });
-                
-                // Mostrar notificación
+
+                agregarMarcadorPersonalizado({
+                    nombre: direccion,
+                    coords: [item.coordenadas.lat, item.coordenadas.lng]
+                }, true, icono);
+
                 mostrarExito(`Ubicación cargada: ${direccion}`);
             };
-            
+
             listaDirecciones.appendChild(li);
         });
     }
@@ -255,33 +299,45 @@ function initMap() {
 
     //Función que elimina todas las direcciones del historial
     function borrarHistorial() {
+       document.querySelectorAll('img').forEach(img => {
+            if (img.src.toLowerCase().endsWith('.png')) {
+                img.remove();
+            }
+        });
         historialDirecciones.splice(0, historialDirecciones.length);
         localStorage.setItem('historialDirecciones', JSON.stringify(historialDirecciones));
         actualizarHistorial();
     }
 
-    // Función para agregar una dirección al historial
-    function agregarAlHistorial(direccion, coordenadas) {
-        // Verificar si ya existe en el historial
-        const existe = historialDirecciones.some(item => 
+    // Cambia la función para agregar al historial:
+    function agregarAlHistorial(direccion, coordenadas, categoria) {
+        // Busca si ya existe la dirección (ignorando mayúsculas/minúsculas)
+        const index = historialDirecciones.findIndex(item =>
             item.direccion.toLowerCase() === direccion.toLowerCase()
         );
-        
-        if (!existe) {
+
+        if (index !== -1) {
+            // Si existe, actualiza la categoría y coordenadas
+            historialDirecciones[index].categoria = categoria;
+            historialDirecciones[index].coordenadas = coordenadas;
+            historialDirecciones[index].fecha = new Date().toISOString();
+        } else {
+            // Si no existe, añade nueva
             historialDirecciones.unshift({
                 direccion: direccion,
                 coordenadas: coordenadas,
+                categoria: categoria,
                 fecha: new Date().toISOString()
             });
-            
+
             // Mantener solo las últimas 10 búsquedas
             if (historialDirecciones.length > 10) {
                 historialDirecciones = historialDirecciones.slice(0, 10);
             }
-            
-            localStorage.setItem('historialDirecciones', JSON.stringify(historialDirecciones));
-            actualizarHistorial();
         }
+
+        localStorage.setItem('historialDirecciones', JSON.stringify(historialDirecciones));
+        actualizarHistorial();
     }
 
     // Toggle para mostrar/ocultar el historial
@@ -302,13 +358,15 @@ function initMap() {
         borrarHistorial();
     });
 
-    // Función que busca una dirección y obtiene sus coordenadas cuando se pulsa el botón
+    // Modifica el evento del botón buscar para pasar la categoría:
     document.getElementById("buscarDireccion").addEventListener("click", function() {
         const direccion = document.getElementById('direccion').value;
-            obtenerCoordenadas(direccion);
+        const categoria = document.getElementById('categoria').value || 'marcador';
+        obtenerCoordenadas(direccion, categoria);
     });
 
-    function obtenerCoordenadas(direccion) {
+    // Modifica obtenerCoordenadas para aceptar la categoría:
+    function obtenerCoordenadas(direccion, categoria) {
         const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(direccion)}&addressdetails=1&limit=1&lang=es`;
     
         // Mostrar indicador de carga
@@ -341,10 +399,14 @@ function initMap() {
                     document.body.classList.add('city-selected');
     
                     // Añadir marcador en la ubicación obtenida
-                    agregarMarcadorPersonalizado({ nombre: direccion, coords: [lat, lng] });
+                    agregarMarcadorPersonalizado(
+                        { nombre: direccion, coords: [lat, lng] },
+                        true,
+                        iconosCategoria[categoria]
+                    );
                     
-                    // Guardar la dirección en el historial
-                    agregarAlHistorial(direccion, { lat, lng });
+                    // Guardar la dirección, coordenadas y categoría en el historial (actualiza si ya existe)
+                    agregarAlHistorial(direccion, { lat, lng }, categoria);
                     
                     // Mostrar notificación de éxito
                     mostrarExito('Ubicación encontrada y guardada en el historial');
@@ -412,4 +474,4 @@ function initMap() {
         map.panTo(ciudadSeleccionada);
     
     });
-} 
+}
