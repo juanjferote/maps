@@ -422,4 +422,4 @@ function initMap() {
         map.panTo(ciudadSeleccionada);
     
     });
-}
+} 
