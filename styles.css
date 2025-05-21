@@ -20,8 +20,9 @@ html, body {
     left: 20px;
     z-index: 2;
     background: rgba(0, 0, 0, 0.6);
-    padding: 20px;
-    width: 280px;
+    padding: 0; /* Eliminamos el padding del contenedor principal */
+    width: 280px; /* Ancho ajustado para mejor legibilidad */
+    max-height: 90vh; /* Altura máxima del 90% del viewport */
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(5px);
@@ -29,25 +30,59 @@ html, body {
     transition: all 0.3s ease;
     transform-origin: top left;
     color: #fff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Aseguramos que el borde redondeado se mantenga */
+}
+
+/* Contenedor interno para el scroll */
+#form-content {
+    overflow-y: auto;
+    max-height: 90vh;
+    padding: 20px;
+    padding-right: 12px; /* Espacio para la barra de desplazamiento */
+    width: 100%;
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+/* Estilos para la barra de desplazamiento */
+#form-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+#form-content::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 3px;
+}
+
+#form-content::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+#form-content::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 /* Initial state - centered */
-body:not(.city-selected) #form-container {
+#form-container {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 300px;
-    padding: 2rem;
-    height: auto;
+    width: 90%;
+    max-width: 500px;
+    transition: all 0.3s ease;
 }
 
-/* When city is selected - top left corner */
-body.city-selected #form-container {
-    top: 15px;
-    left: 15px;
+/* When a city is selected or a search is performed */
+body.city-selected #form-container,
+body.search-performed #form-container {
+    top: 20px;
+    left: 20px;
     transform: none;
-    width: 180px;
-    padding: 10px;
+    width: 280px;
 }
 
 /* Make text and select smaller when in corner */
@@ -350,6 +385,63 @@ select::-webkit-scrollbar-thumb {
 
 select::-webkit-scrollbar-thumb:hover {
     background: #3a5a80;
+}
+
+/* Estilos para el historial de direcciones */
+.historial-contenedor {
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.historial-contenedor h4 {
+    margin: 0 0 10px 0;
+    color: #4facfe;
+    font-size: 0.9rem;
+}
+
+#listaDirecciones li {
+    padding: 8px 10px;
+    margin: 5px 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#listaDirecciones li:hover {
+    background-color: rgba(79, 172, 254, 0.3);
+    transform: translateX(3px);
+}
+
+#listaDirecciones li .borrar-direccion {
+    color: #ff6b6b;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-left: 10px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+#listaDirecciones li .borrar-direccion:hover {
+    opacity: 1;
+}
+
+/* Estilos para el mensaje de sin resultados */
+.sin-resultados {
+    color: rgba(255, 255, 255, 0.7);
+    font-style: italic;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 0.9rem;
 }
 
 /* Notificaciones */

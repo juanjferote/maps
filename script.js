@@ -165,6 +165,9 @@ function initMap() {
             }
         ]
     });
+    
+    // Asegurarse de que el formulario empiece centrado
+    document.body.classList.remove('city-selected', 'search-performed');
 
     // Configurar el evento del botón de la leyenda
     const toggleBtn = document.getElementById('toggleLeyenda');
@@ -172,22 +175,154 @@ function initMap() {
         toggleBtn.addEventListener('click', toggleLeyenda);
     }
     
+    // Inicializar el historial de direcciones desde localStorage
+    let historialDirecciones = JSON.parse(localStorage.getItem('historialDirecciones')) || [];
+    const historialContainer = document.getElementById('historialDirecciones');
+    const listaDirecciones = document.getElementById('listaDirecciones');
+    const toggleHistorialBtn = document.getElementById('toggleHistorial');
+    let historialVisible = false;
+
+    // Función para actualizar la visualización del historial
+    function actualizarHistorial() {
+        listaDirecciones.innerHTML = '';
+        
+        // Mostrar mensaje si no hay direcciones
+        if (historialDirecciones.length === 0) {
+            const mensaje = document.createElement('div');
+            mensaje.className = 'sin-resultados';
+            mensaje.textContent = 'No hay direcciones guardadas';
+            listaDirecciones.appendChild(mensaje);
+            return;
+        }
+        
+        historialDirecciones.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.textContent = item.direccion;
+            li.dataset.index = index;
+            
+            // Añadir botón de eliminar al lado de la ubi
+            const span = document.createElement('span');
+            span.className = 'borrar-direccion';
+            span.innerHTML = '&times;';
+            span.onclick = (e) => {
+                e.stopPropagation();
+                eliminarDelHistorial(index);
+            };
+            
+            li.appendChild(span);
+            
+            // Al hacer clic en una dirección del historial
+            li.onclick = () => {
+                const direccion = item.direccion;
+                const direccionInput = document.getElementById('direccion');
+                direccionInput.value = direccion;
+                
+                // Mover el formulario a la esquina
+                document.body.classList.add('search-performed');
+                document.body.classList.add('city-selected');
+                
+                // Usar las coordenadas guardadas en lugar de hacer una nueva búsqueda
+                map.setCenter(item.coordenadas);
+                
+                // Limpiar marcadores anteriores
+                if (window.markers) {
+                    window.markers.forEach(marker => marker.setMap(null));
+                    window.markers = [];
+                }
+                
+                // Agregar el marcador de la dirección seleccionada
+                agregarMarcadorPersonalizado({ 
+                    nombre: direccion, 
+                    coords: [item.coordenadas.lat, item.coordenadas.lng] 
+                });
+                
+                // Mostrar notificación
+                mostrarExito(`Ubicación cargada: ${direccion}`);
+            };
+            
+            listaDirecciones.appendChild(li);
+        });
+    }
+
+    // Función para eliminar una dirección del historial ( solo una)
+    function eliminarDelHistorial(index) {
+        historialDirecciones.splice(index, 1);
+        localStorage.setItem('historialDirecciones', JSON.stringify(historialDirecciones));
+        actualizarHistorial();
+    }
+
+    // Función para agregar una dirección al historial
+    function agregarAlHistorial(direccion, coordenadas) {
+        // Verificar si ya existe en el historial
+        const existe = historialDirecciones.some(item => 
+            item.direccion.toLowerCase() === direccion.toLowerCase()
+        );
+        
+        if (!existe) {
+            historialDirecciones.unshift({
+                direccion: direccion,
+                coordenadas: coordenadas,
+                fecha: new Date().toISOString()
+            });
+            
+            // Mantener solo las últimas 10 búsquedas
+            if (historialDirecciones.length > 10) {
+                historialDirecciones = historialDirecciones.slice(0, 10);
+            }
+            
+            localStorage.setItem('historialDirecciones', JSON.stringify(historialDirecciones));
+            actualizarHistorial();
+        }
+    }
+
+    // Toggle para mostrar/ocultar el historial
+    toggleHistorialBtn.addEventListener('click', () => {
+        historialVisible = !historialVisible;
+        if (historialVisible) {
+            historialContainer.style.display = 'block';
+            toggleHistorialBtn.textContent = 'Ocultar historial de direcciones';
+            actualizarHistorial();
+        } else {
+            historialContainer.style.display = 'none';
+            toggleHistorialBtn.textContent = 'Ver historial de direcciones';
+        }
+    });
+
     // Función que busca una dirección y obtiene sus coordenadas cuando se pulsa el botón
     document.getElementById("buscarDireccion").addEventListener("click", function() {
-    const direccion = document.getElementById('direccion').value;
-    obtenerCoordenadas(direccion);
+        const direccion = document.getElementById('direccion').value.trim();
+        const ciudad = document.getElementById('ciudad').value;
+        
+        if (!ciudad && !direccion) {
+            mostrarError('Por favor, selecciona una ciudad o ingresa una dirección para buscar.');
+            return;
+        }
+        
+        if (direccion) {
+            obtenerCoordenadas(direccion);
+        }
     });
 
     function obtenerCoordenadas(direccion) {
         const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(direccion)}&addressdetails=1&limit=1&lang=es`;
     
+        // Mostrar indicador de carga
+        const buscarBtn = document.getElementById('buscarDireccion');
+        const originalText = buscarBtn.innerHTML;
+        buscarBtn.disabled = true;
+        buscarBtn.innerHTML = '<span class="spinner"></span> Buscando...';
+        
         fetch(url, {
             headers: {
-                "User-Agent": "TuNombreDeApp/1.0 (tuemail@dominio.com)"  // Reemplaza con el nombre de tu app o tu email
+                "User-Agent": "MapApp/1.0 (contacto@tudominio.com)"
             }
         })
-            .then(response => response.json())  // Convertimos la respuesta en formato JSON
+            .then(response => response.json())
             .then(data => {
+                // Restaurar el botón
+                buscarBtn.disabled = false;
+                buscarBtn.innerHTML = originalText;
+                
                 if (data && data.length > 0) {
                     // Obtener las coordenadas (latitud y longitud) de la primera ubicación
                     const lat = parseFloat(data[0].lat);
@@ -195,18 +330,32 @@ function initMap() {
     
                     // Centrar el mapa en las coordenadas obtenidas
                     map.setCenter({ lat, lng });
+                    
+                    // Mover el formulario a la esquina superior izquierda
+                    document.body.classList.add('search-performed');
+                    document.body.classList.add('city-selected');
     
                     // Añadir marcador en la ubicación obtenida
                     agregarMarcadorPersonalizado({ nombre: direccion, coords: [lat, lng] });
+                    
+                    // Guardar la dirección en el historial
+                    agregarAlHistorial(direccion, { lat, lng });
+                    
+                    // Mostrar notificación de éxito
+                    mostrarExito('Ubicación encontrada y guardada en el historial');
                 } else {
                     // Si no se encuentran resultados
-                    alert("No se encontraron resultados para la dirección ingresada.");
+                    mostrarError("No se encontraron resultados para la dirección ingresada.");
                 }
             })
             .catch(error => {
+                // Restaurar el botón en caso de error
+                buscarBtn.disabled = false;
+                buscarBtn.innerHTML = originalText;
+                
                 // Manejo de errores en caso de que falle la solicitud
                 console.error("Error al obtener la geolocalización:", error);
-                alert("Hubo un problema al realizar la búsqueda.");
+                mostrarError("Hubo un problema al realizar la búsqueda.");
             });
     }
 
@@ -260,9 +409,11 @@ function initMap() {
         
         // Actualizar la leyenda
         actualizarLeyenda();
-
-
-        map.panTo(ciudadSeleccionada);
         
+        // Mover el mapa a la ubicación seleccionada
+        if (ciudadSeleccionada) {
+            map.panTo(ciudadSeleccionada);
+        }
+    
     });
 }
