@@ -387,6 +387,13 @@ select::-webkit-scrollbar-thumb:hover {
     background: #3a5a80;
 }
 
+#historialDirecciones {
+    display: none;
+    margin-top: 15px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
 /* Estilos para el historial de direcciones */
 .historial-contenedor {
     background-color: rgba(0, 0, 0, 0.4);
@@ -400,6 +407,12 @@ select::-webkit-scrollbar-thumb:hover {
     margin: 0 0 10px 0;
     color: #4facfe;
     font-size: 0.9rem;
+}
+
+#listaDirecciones {
+    list-style: none; 
+    padding: 0; 
+    margin: 10px 0 0 0;
 }
 
 #listaDirecciones li {
