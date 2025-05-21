@@ -260,11 +260,9 @@ function initMap() {
         
         // Actualizar la leyenda
         actualizarLeyenda();
+
+
+        map.panTo(ciudadSeleccionada);
         
-        // Mover el mapa a la ubicación seleccionada
-        if (ciudadSeleccionada) {
-            map.panTo(ciudadSeleccionada);
-        }
-    
     });
 }
