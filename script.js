@@ -105,10 +105,6 @@ function toggleLeyenda() {
         leyenda.classList.remove('leyenda-oculta');
         leyenda.classList.add('leyenda-visible');
         boton.textContent = 'Ocultar Leyenda';
-        // Asegurarse de que la leyenda tenga contenido
-        if (document.getElementById('contenido-leyenda').children.length === 0) {
-            actualizarLeyenda();
-        }
     } else {
         // Si está visible, ocultarlo
         leyenda.classList.remove('leyenda-visible');
@@ -368,10 +364,7 @@ function initMap() {
         var ciudadSeleccionada;
         let lugaresInteres = [];
         
-        // Limpiar marcadores anteriores
-        if (window.markers) {
-            window.markers.forEach(marker => marker.setMap(null));
-        }
+
         window.markers = [];
         
         switch (ciudad) {
@@ -410,10 +403,7 @@ function initMap() {
         // Actualizar la leyenda
         actualizarLeyenda();
         
-        // Mover el mapa a la ubicación seleccionada
-        if (ciudadSeleccionada) {
-            map.panTo(ciudadSeleccionada);
-        }
+         map.panTo(ciudadSeleccionada);
     
     });
 }
