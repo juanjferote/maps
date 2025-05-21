@@ -255,6 +255,7 @@ function initMap() {
 
     function borrarHistorial() {
         historialDirecciones.splice(0, historialDirecciones.length);
+        localStorage.setItem('historialDirecciones', JSON.stringify(historialDirecciones));
         actualizarHistorial();
     }
 
@@ -302,17 +303,8 @@ function initMap() {
 
     // Función que busca una dirección y obtiene sus coordenadas cuando se pulsa el botón
     document.getElementById("buscarDireccion").addEventListener("click", function() {
-        const direccion = document.getElementById('direccion').value.trim();
-        const ciudad = document.getElementById('ciudad').value;
-        
-        if (!ciudad && !direccion) {
-            mostrarError('Por favor, selecciona una ciudad o ingresa una dirección para buscar.');
-            return;
-        }
-        
-        if (direccion) {
+        const direccion = document.getElementById('direccion').value;
             obtenerCoordenadas(direccion);
-        }
     });
 
     function obtenerCoordenadas(direccion) {
