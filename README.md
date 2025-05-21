@@ -57,6 +57,7 @@ Proyecto "maps" Sesión 1 – Insertar un mapa. Para practicas 1ºDAW
 
 **Dificultades encontradas**
 - [Dificultad 1: Instalar la API de Google Maps]
+- [Dificultad 2: Borrar los iconos, aún estamos trabajando en ello]
 
 **Soluciones aplicadas:**^
 - [Solución 1: Descargar otra API diferente a la de Google Maps]
@@ -74,4 +75,4 @@ Proyecto "maps" Sesión 1 – Insertar un mapa. Para practicas 1ºDAW
 
 
  *Ideas de mejora futura:*
- - [Agregar más funcionalidades y más estilos]
+ - [Agregar más funcionalidades y más estilos. Mejorar la función de borrar iconos] 
