@@ -9,22 +9,44 @@
   </head>
   <body>
     <div id="form-container">
-      <label for="ciudad">Selecciona una ciudad:</label>
-      <select id="ciudad" name="ciudad" required>
-        <option value="" disabled selected>Elige una ciudad</option>
-        <option value="leon">León</option>
-        <option value="dublin">Dublín</option>
-        <option value="bogota">Bogotá</option>
-        <option value="varsovia">Varsovia</option>
-        <option value="tokio">Tokio</option>
-      </select>
-      <input type="text" name="direccion" id="direccion" placeholder="Introduce una dirección">
-      <table>
-        <tr>
-          <td><button id="buscarDireccion" class="btn">Buscar dirección</button></td>
-          <td><button id="toggleLeyenda" class="btn">Mostrar Leyenda</button></td>
-        </tr>
-      </table>
+        <div class="form-section">
+            <label for="ciudad">Selecciona una ciudad</label>
+            <select id="ciudad">
+                <option value="">-- Elige una ciudad --</option>
+                <option value="leon">León</option>
+                <option value="dublin">Dublín</option>
+                <option value="bogota">Bogotá</option>
+                <option value="varsovia">Varsovia</option>
+                <option value="tokio">Tokio</option>
+            </select>
+        </div>
+        
+        <div class="separator">
+            <span>o</span>
+        </div>
+        
+        <div class="form-section">
+            <h3>Buscar por dirección</h3>
+            <div class="form-group">
+                <input type="text" id="direccion" placeholder="Escribe una dirección">
+            </div>
+            <div class="form-group">
+                <select id="categoria" class="category-select">
+                    <option value="">Selecciona una categoría</option>
+                    <option value="plaza">Plaza</option>
+                    <option value="iglesia">Monumento Religioso</option>
+                    <option value="estadio">Estadio</option>
+                    <option value="museo">Museo</option>
+                </select>
+            </div>
+            <div class="button-group">
+                <button id="buscarDireccion" class="btn">Buscar dirección</button>
+            </div>
+        </div>
+        
+        <div class="form-actions">
+            <button id="toggleLeyenda" class="btn btn-outline">Mostrar Leyenda</button>
+        </div>
     </div>
     <div id="leyenda" class="leyenda-oculta">
       <h3>Leyenda</h3>

@@ -61,6 +61,40 @@ function actualizarLeyenda() {
     });
 }
 
+// Función para mostrar notificaciones
+function mostrarNotificacion(mensaje, tipo = 'info') {
+    // Eliminar notificaciones anteriores
+    const notificacionesAnteriores = document.querySelectorAll('.notificacion');
+    notificacionesAnteriores.forEach(notif => notif.remove());
+    
+    // Crear elemento de notificación
+    const notificacion = document.createElement('div');
+    notificacion.className = `notificacion notificacion-${tipo}`;
+    notificacion.textContent = mensaje;
+    
+    // Agregar al documento
+    document.body.appendChild(notificacion);
+    
+    // Mostrar con animación
+    setTimeout(() => {
+        notificacion.classList.add('mostrar');
+    }, 10);
+    
+    // Ocultar después de 3 segundos
+    setTimeout(() => {
+        notificacion.classList.remove('mostrar');
+        setTimeout(() => notificacion.remove(), 300);
+    }, 3000);
+}
+
+function mostrarError(mensaje) {
+    mostrarNotificacion(mensaje, 'error');
+}
+
+function mostrarExito(mensaje) {
+    mostrarNotificacion(mensaje, 'exito');
+}
+
 // Función para alternar la visibilidad de la leyenda
 function toggleLeyenda() {
     const leyenda = document.getElementById('leyenda');
@@ -83,17 +117,127 @@ function toggleLeyenda() {
     }
 }
 
+// Función para limpiar marcadores de búsqueda
+function limpiarBusqueda() {
+    if (window.busquedaMarker) {
+        window.busquedaMarker.setMap(null);
+        window.busquedaMarker = null;
+    }
+}
+
+// Función para geocodificar una dirección
+function geocodeAddress(address, callback) {
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ 'address': address }, function(results, status) {
+        if (status === 'OK') {
+            const location = results[0].geometry.location;
+            callback({
+                lat: location.lat(),
+                lng: location.lng()
+            });
+        } else {
+            alert('No se pudo encontrar la dirección: ' + status);
+            callback(null);
+        }
+    });
+}
+
+// Función para agregar un marcador personalizado
+function agregarMarcadorPersonalizado(ubicacion, esPersonalizado = true) {
+    const marker = new google.maps.Marker({
+        position: { lat: ubicacion.coords[0], lng: ubicacion.coords[1] },
+        map: map,
+        title: ubicacion.nombre,
+        icon: {
+            url: esPersonalizado ? 'images/star.png' : ubicacion.icono,
+            scaledSize: new google.maps.Size(32, 32)
+        }
+    });
+    
+    // Crear ventana de información
+    const infoWindow = new google.maps.InfoWindow({
+        content: `<div><strong>${ubicacion.nombre}</strong>${esPersonalizado ? '<br>Ubicación personalizada' : ''}</div>`
+    });
+    
+    // Mostrar infoWindow al hacer clic
+    marker.addListener('click', () => {
+        infoWindow.open(map, marker);
+    });
+    
+    if (!window.markers) window.markers = [];
+    window.markers.push(marker);
+    return marker;
+}
+
 function initMap() {
     // Inicializar el mapa
     map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: 40.4165, lng: -3.70256 },
         zoom: 8,
+        styles: [
+            {
+                "featureType": "poi",
+                "elementType": "labels",
+                "stylers": [{"visibility": "off"}]
+            }
+        ]
     });
 
     // Configurar el evento del botón de la leyenda
     const toggleBtn = document.getElementById('toggleLeyenda');
     if (toggleBtn) {
         toggleBtn.addEventListener('click', toggleLeyenda);
+    }
+    
+    // Configurar el botón de búsqueda de dirección
+    const buscarBtn = document.getElementById('buscarDireccion');
+    if (buscarBtn) {
+        buscarBtn.addEventListener('click', function() {
+            const direccion = document.getElementById('direccion').value;
+            const categoria = document.getElementById('categoria').value;
+            
+            if (!direccion) {
+                mostrarError('Por favor, introduce una dirección');
+                return;
+            }
+            
+            if (!categoria) {
+                mostrarError('Por favor, selecciona una categoría');
+                return;
+            }
+            
+            // Mostrar indicador de carga
+            const btnOriginalText = buscarBtn.textContent;
+            buscarBtn.disabled = true;
+            buscarBtn.innerHTML = '<span class="spinner">Buscando...</span>';
+            
+            geocodeAddress(direccion, (coords) => {
+                // Restaurar el botón
+                buscarBtn.disabled = false;
+                buscarBtn.textContent = btnOriginalText;
+                
+                if (coords) {
+                    // Limpiar marcadores anteriores de búsqueda
+                    if (window.busquedaMarker) {
+                        window.busquedaMarker.setMap(null);
+                    }
+                    
+                    // Crear marcador para la dirección buscada
+                    window.busquedaMarker = agregarMarcadorPersonalizado({
+                        nombre: direccion,
+                        coords: [coords.lat, coords.lng],
+                        icono: `images/${categoria}.png`
+                    }, true);
+                    
+                    // Centrar el mapa en la nueva ubicación
+                    map.panTo({ lat: coords.lat, lng: coords.lng });
+                    map.setZoom(15);
+                    
+                    // Mostrar notificación de éxito
+                    mostrarExito('Ubicación encontrada');
+                }
+            });
+        });
     }
     
     // Cargar la leyenda inicialmente (pero mantenerla oculta)
@@ -141,30 +285,21 @@ function initMap() {
         
         // Crear marcadores
         lugaresInteres.forEach(ubicacion => {
-            const marker = new google.maps.Marker({
-                position: { lat: ubicacion.coords[0], lng: ubicacion.coords[1] },
-                map: map,
-                title: ubicacion.nombre,
-                icon: {
-                    url: ubicacion.icono,
-                    scaledSize: new google.maps.Size(32, 32)
-                }
-            });
-            window.markers.push(marker);
+            agregarMarcadorPersonalizado(ubicacion, false);
         });
         
         // Actualizar la leyenda
         actualizarLeyenda();
         
         // Mover el mapa a la ubicación seleccionada
-        map.panTo(ciudadSeleccionada);
+        if (ciudadSeleccionada) {
+            map.panTo(ciudadSeleccionada);
+        }
         
         // Mostrar la leyenda automáticamente al seleccionar una ciudad
         const leyenda = document.getElementById('leyenda');
-        if (leyenda.classList.contains('leyenda-oculta')) {
+        if (leyenda && leyenda.classList.contains('leyenda-oculta')) {
             toggleLeyenda();
         }
     });
-    map.panTo(ciudadSeleccionada);
-    map.setZoom(10)
 }
