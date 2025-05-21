@@ -246,13 +246,14 @@ function initMap() {
         });
     }
 
-    // Función para eliminar una dirección del historial ( solo una)
+    // Función para eliminar una dirección del historial (solo una)
     function eliminarDelHistorial(index) {
         historialDirecciones.splice(index, 1);
         localStorage.setItem('historialDirecciones', JSON.stringify(historialDirecciones));
         actualizarHistorial();
     }
 
+    //Función que elimina todas las direcciones del historial
     function borrarHistorial() {
         historialDirecciones.splice(0, historialDirecciones.length);
         localStorage.setItem('historialDirecciones', JSON.stringify(historialDirecciones));
