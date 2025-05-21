@@ -1,7 +1,5 @@
 let map;
 
-const direccion = document.getElementById("direccion").value;
-
 var ubicacionesLeon = [
     { nombre: "Catedral de León", coords: [42.59943637274811, -5.567163096813226], icono: "images/iglesia.png" },
     { nombre: "Plaza del Grano", coords: [42.595410928145235, -5.568417560127307], icono: "images/plaza.png" },
@@ -127,13 +125,6 @@ function limpiarBusqueda() {
     }
 }
 
-// Función para geocodificar una dirección
-document.getElementById("buscarDireccion").addEventListener("click", function() {
-    obtenerCoordenadas(direccion);
-});
-
-
-
 // Función para agregar un marcador personalizado
 function agregarMarcadorPersonalizado(ubicacion, esPersonalizado = true) {
     const marker = new google.maps.Marker({
@@ -181,8 +172,44 @@ function initMap() {
         toggleBtn.addEventListener('click', toggleLeyenda);
     }
     
+    // Función que busca una dirección y obtiene sus coordenadas cuando se pulsa el botón
+    document.getElementById("buscarDireccion").addEventListener("click", function() {
+    const direccion = document.getElementById('direccion').value;
+    obtenerCoordenadas(direccion);
+    });
+
+    function obtenerCoordenadas(direccion) {
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(direccion)}&addressdetails=1&limit=1&lang=es`;
     
+        fetch(url, {
+            headers: {
+                "User-Agent": "TuNombreDeApp/1.0 (tuemail@dominio.com)"  // Reemplaza con el nombre de tu app o tu email
+            }
+        })
+            .then(response => response.json())  // Convertimos la respuesta en formato JSON
+            .then(data => {
+                if (data && data.length > 0) {
+                    // Obtener las coordenadas (latitud y longitud) de la primera ubicación
+                    const lat = parseFloat(data[0].lat);
+                    const lng = parseFloat(data[0].lon);
     
+                    // Centrar el mapa en las coordenadas obtenidas
+                    map.setCenter({ lat, lng });
+    
+                    // Añadir marcador en la ubicación obtenida
+                    agregarMarcadorPersonalizado({ nombre: direccion, coords: [lat, lng] });
+                } else {
+                    // Si no se encuentran resultados
+                    alert("No se encontraron resultados para la dirección ingresada.");
+                }
+            })
+            .catch(error => {
+                // Manejo de errores en caso de que falle la solicitud
+                console.error("Error al obtener la geolocalización:", error);
+                alert("Hubo un problema al realizar la búsqueda.");
+            });
+    }
+
     // Cargar la leyenda inicialmente (pero mantenerla oculta)
     actualizarLeyenda()
 
@@ -238,11 +265,6 @@ function initMap() {
         if (ciudadSeleccionada) {
             map.panTo(ciudadSeleccionada);
         }
-        
-        // Mostrar la leyenda automáticamente al seleccionar una ciudad
-        const leyenda = document.getElementById('leyenda');
-        if (leyenda && leyenda.classList.contains('leyenda-oculta')) {
-            toggleLeyenda();
-        }
+    
     });
 }
