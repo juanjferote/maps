@@ -415,10 +415,7 @@ function initMap() {
         lugaresInteres.forEach(ubicacion => {
             agregarMarcadorPersonalizado(ubicacion, false);
         });
-        
-        // Actualizar la leyenda
-        actualizarLeyenda();
-        
+
         map.panTo(ciudadSeleccionada);
     
     });
