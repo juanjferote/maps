@@ -43,11 +43,11 @@ function actualizarLeyenda() {
 
     // Definir los tipos de lugares con sus imágenes locales
     const tiposLugares = [
-        { tipo: 'Plazas', icono: 'images/plaza.png' },
-        { tipo: 'Monumentos Religiosos', icono: 'images/iglesia.png' },
-        { tipo: 'Estadios', icono: 'images/estadio.png' },
-        { tipo: 'Museos', icono: 'images/museo.png' },
-        { tipo: 'Marcador', icono: 'images/mapa.png' } 
+        { tipo: 'Plazas', icono: 'images/plaza2.webp' },
+        { tipo: 'Monumentos Religiosos', icono: 'images/iglesia2.webp' },
+        { tipo: 'Estadios', icono: 'images/estadio2.webp' },
+        { tipo: 'Museos', icono: 'images/museo2.webp' },
+        { tipo: 'Marcador', icono: 'images/mapa2.webp' } 
     ];
 
     // Añadir cada tipo a la leyenda
@@ -402,7 +402,7 @@ function initMap() {
         borrarHistorial();
     });
 
-    // Toggle para mostrar/ocultar terremotos
+    // mostrar/ocultar terremotos
     const toggleTerremotosBtn = document.getElementById('toggleTerremotos');
     let terremotosVisible = false;
     let terremotosLayer = null;
@@ -411,11 +411,11 @@ function initMap() {
         terremotosVisible = !terremotosVisible;
         
         if (terremotosVisible) {
-            // Mostrar terremotos
+            // mostrar terremotos
             toggleTerremotosBtn.textContent = 'Ocultar Movimientos Sísmicos';
            
         } else {
-            // Ocultar terremotos
+            // ocultar terremotos
             toggleTerremotosBtn.textContent = 'Mostrar Movimientos Sísmicos';
             
         }
