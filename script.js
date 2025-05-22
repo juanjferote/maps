@@ -36,6 +36,40 @@ var ubicacionesTokio = [
 ];
 
 
+
+function procesarXML(url) {
+    // Obtener el archivo XML y procesarlo
+    fetch(url)
+        .then(response => response.text())  // Leer el XML como texto
+        .then(xmlString => {
+            // Usar DOMParser para convertir el XML en un objeto Document
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlString, "application/xml");
+
+            // El espacio de nombres del XML (ajústalo si es necesario)
+            const namespace = "http://www.w3.org/2003/01/geo/wgs84_pos#";  // Cambia esto si es diferente
+
+            // Obtener todos los elementos 'geo:lat' y 'geo:long' usando el espacio de nombres
+            const latitudes = xmlDoc.getElementsByTagNameNS(namespace, "lat");
+            const longitudes = xmlDoc.getElementsByTagNameNS(namespace, "long");
+
+            // Iterar sobre las latitudes y longitudes para agregar marcadores
+            for (let i = 0; i < latitudes.length; i++) {
+                const latitud = parseFloat(latitudes[i].textContent);
+                const longitud = parseFloat(longitudes[i].textContent);
+                
+                // Crear el marcador
+                new google.maps.Marker({
+                    position: { lat: latitud, lng: longitud },
+                    map: map,
+                });
+            }
+        })
+        .catch(error => {
+            console.error("Error al cargar el archivo XML:", error);
+        });
+}
+
 // Función para actualizar la leyenda
 function actualizarLeyenda() {
     const contenido = document.getElementById('contenido-leyenda');
@@ -189,6 +223,10 @@ function initMap() {
             }
         ]
     });
+
+    const url = "https://www.ign.es/ign/RssTools/sismologia.xml";  
+    procesarXML(url);
+    
     
     // Asegurarse de que el formulario empiece centrado
     document.body.classList.remove('city-selected', 'search-performed');
@@ -287,7 +325,7 @@ function initMap() {
             };
 
             listaDirecciones.appendChild(li);
-        });
+        });        
     }
 
     // Función para eliminar una dirección del historial (solo una)
