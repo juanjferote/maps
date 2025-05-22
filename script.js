@@ -292,8 +292,52 @@ function initMap() {
 
     // Función para eliminar una dirección del historial (solo una)
     function eliminarDelHistorial(index) {
+        // Obtener la dirección que se va a eliminar
+        const direccionAEliminar = historialDirecciones[index];
+        
+        // Eliminar el marcador del array de marcadores de historial si existe
+        if (window.historialMarkers && window.historialMarkers[index]) {
+            window.historialMarkers[index].setMap(null);
+            window.historialMarkers.splice(index, 1);
+        }
+        
+        // Función para comparar posiciones con cierta tolerancia
+        const posicionesIguales = (pos1, pos2) => {
+            const precision = 0.000001; // Tolerancia para comparación de coordenadas
+            return Math.abs(pos1.lat - pos2.lat) < precision && 
+                   Math.abs(pos1.lng - pos2.lng) < precision;
+        };
+        
+        // Eliminar cualquier marcador que coincida con las coordenadas (de cualquier tipo)
+        if (window.markers) {
+            // Crear una copia del array para poder modificarlo mientras iteramos
+            const marcadoresAEliminar = [];
+            
+            // Primero identificar los marcadores a eliminar
+            window.markers.forEach((marker, i) => {
+                const pos = marker.getPosition();
+                if (pos && pos.lat && pos.lng) {
+                    const posMarcador = { lat: pos.lat(), lng: pos.lng() };
+                    if (posicionesIguales(posMarcador, direccionAEliminar.coordenadas)) {
+                        marcadoresAEliminar.push(i);
+                    }
+                }
+            });
+            
+            // Eliminar los marcadores en orden inverso para no afectar los índices
+            marcadoresAEliminar.sort((a, b) => b - a).forEach(i => {
+                if (window.markers[i]) {
+                    window.markers[i].setMap(null);
+                    window.markers.splice(i, 1);
+                }
+            });
+        }
+        
+        // Eliminar la dirección del historial
         historialDirecciones.splice(index, 1);
         localStorage.setItem('historialDirecciones', JSON.stringify(historialDirecciones));
+        
+        // Actualizar la vista del historial
         actualizarHistorial();
     }
 
