@@ -223,11 +223,7 @@ function initMap() {
             }
         ]
     });
-
-    const url = "https://www.ign.es/ign/RssTools/sismologia.xml";  
-    procesarXML(url);
-    
-    
+        
     // Asegurarse de que el formulario empiece centrado
     document.body.classList.remove('city-selected', 'search-performed');
 
@@ -446,8 +442,9 @@ function initMap() {
     let terremotosLayer = null;
 
     toggleTerremotosBtn.addEventListener('click', () => {
+        const url = "https://www.ign.es/ign/RssTools/sismologia.xml";  
         terremotosVisible = !terremotosVisible;
-        
+        procesarXML(url);
         if (terremotosVisible) {
             // mostrar terremotos
             toggleTerremotosBtn.textContent = 'Ocultar Movimientos Sísmicos';
