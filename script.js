@@ -62,6 +62,10 @@ function procesarXML(url) {
                 new google.maps.Marker({
                     position: { lat: latitud, lng: longitud },
                     map: map,
+                    icon: {
+                        url: "images/terremoto.webp",
+                        scaledSize: new google.maps.Size(32, 32)
+                    }
                 });
             }
         })
