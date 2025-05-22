@@ -97,7 +97,8 @@ function actualizarLeyenda() {
         { tipo: 'Monumentos Religiosos', icono: 'images/iglesia2.webp' },
         { tipo: 'Estadios', icono: 'images/estadio2.webp' },
         { tipo: 'Museos', icono: 'images/museo2.webp' },
-        { tipo: 'Marcador', icono: 'images/mapa2.webp' } 
+        { tipo: 'Marcador', icono: 'images/mapa2.webp' },
+        { tipo: 'Movimientos Sísmicos', icono: 'images/terremoto.webp' } 
     ];
 
     // Añadir cada tipo a la leyenda
