@@ -53,13 +53,23 @@ function procesarXML(url) {
             const latitudes = xmlDoc.getElementsByTagNameNS(namespace, "lat");
             const longitudes = xmlDoc.getElementsByTagNameNS(namespace, "long");
 
+            // Eliminar marcadores de terremotos anteriores
+            if (window.terremotosMarkers) {
+                window.terremotosMarkers.forEach(marker => {
+                    if (marker) {
+                        marker.setMap(null);
+                    }
+                });
+                window.terremotosMarkers = [];
+            }
+
             // Iterar sobre las latitudes y longitudes para agregar marcadores
             for (let i = 0; i < latitudes.length; i++) {
                 const latitud = parseFloat(latitudes[i].textContent);
                 const longitud = parseFloat(longitudes[i].textContent);
                 
                 // Crear el marcador
-                new google.maps.Marker({
+                const marker = new google.maps.Marker({
                     position: { lat: latitud, lng: longitud },
                     map: map,
                     icon: {
@@ -67,8 +77,10 @@ function procesarXML(url) {
                         scaledSize: new google.maps.Size(32, 32)
                     }
                 });
-            }
-        })
+                
+                // Guardar el marcador en el array
+                window.terremotosMarkers.push(marker);
+            }      })
         .catch(error => {
             console.error("Error al cargar el archivo XML:", error);
         });
@@ -444,20 +456,32 @@ function initMap() {
     const toggleTerremotosBtn = document.getElementById('toggleTerremotos');
     let terremotosVisible = false;
     let terremotosLayer = null;
+    window.terremotosMarkers = [];  // Array para almacenar los marcadores de terremotos
 
     toggleTerremotosBtn.addEventListener('click', () => {
         const url = "https://www.ign.es/ign/RssTools/sismologia.xml";  
         terremotosVisible = !terremotosVisible;
-        procesarXML(url);
+        
         if (terremotosVisible) {
-            // mostrar terremotos
+            // Si se está mostrando, procesar el XML para mostrar los terremotos
+            procesarXML(url);
             toggleTerremotosBtn.textContent = 'Ocultar Movimientos Sísmicos';
-           
         } else {
-            // ocultar terremotos
+            // Si se está ocultando, eliminar los marcadores de terremotos
+            if (window.terremotosMarkers) {
+                window.terremotosMarkers.forEach(marker => {
+                    if (marker) {
+                        marker.setMap(null);
+                    }
+                });
+                window.terremotosMarkers = [];
+            }
             toggleTerremotosBtn.textContent = 'Mostrar Movimientos Sísmicos';
-            
         }
+        
+        // Mover el formulario a la esquina superior izquierda
+        document.body.classList.add('search-performed');
+        document.body.classList.add('city-selected');
     });
 
     // Modifica el evento del botón buscar para pasar la categoría:
