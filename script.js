@@ -77,11 +77,11 @@ function actualizarLeyenda() {
 
     // Definir los tipos de lugares con sus imágenes locales
     const tiposLugares = [
-        { tipo: 'Plazas', icono: 'images/plaza.png' },
-        { tipo: 'Monumentos Religiosos', icono: 'images/iglesia.png' },
-        { tipo: 'Estadios', icono: 'images/estadio.png' },
-        { tipo: 'Museos', icono: 'images/museo.png' },
-        { tipo: 'Marcador', icono: 'images/mapa.png' } 
+        { tipo: 'Plazas', icono: 'images/plaza2.webp' },
+        { tipo: 'Monumentos Religiosos', icono: 'images/iglesia2.webp' },
+        { tipo: 'Estadios', icono: 'images/estadio2.webp' },
+        { tipo: 'Museos', icono: 'images/museo2.webp' },
+        { tipo: 'Marcador', icono: 'images/mapa2.webp' } 
     ];
 
     // Añadir cada tipo a la leyenda
@@ -427,17 +427,36 @@ function initMap() {
         historialVisible = !historialVisible;
         if (historialVisible) {
             historialContainer.style.display = 'block';
-            toggleHistorialBtn.textContent = 'Ocultar historial de direcciones';
+            toggleHistorialBtn.textContent = 'Ocultar';
             actualizarHistorial();
         } else {
             historialContainer.style.display = 'none';
-            toggleHistorialBtn.textContent = 'Ver historial de direcciones';
+            toggleHistorialBtn.textContent = 'Historial';
         }
     });
 
     //Botón que elimina todas las búsquedas del historial
     document.getElementById("borrarHistorial").addEventListener("click", function() {
         borrarHistorial();
+    });
+
+    // mostrar/ocultar terremotos
+    const toggleTerremotosBtn = document.getElementById('toggleTerremotos');
+    let terremotosVisible = false;
+    let terremotosLayer = null;
+
+    toggleTerremotosBtn.addEventListener('click', () => {
+        terremotosVisible = !terremotosVisible;
+        
+        if (terremotosVisible) {
+            // mostrar terremotos
+            toggleTerremotosBtn.textContent = 'Ocultar Movimientos Sísmicos';
+           
+        } else {
+            // ocultar terremotos
+            toggleTerremotosBtn.textContent = 'Mostrar Movimientos Sísmicos';
+            
+        }
     });
 
     // Modifica el evento del botón buscar para pasar la categoría:
