@@ -389,17 +389,36 @@ function initMap() {
         historialVisible = !historialVisible;
         if (historialVisible) {
             historialContainer.style.display = 'block';
-            toggleHistorialBtn.textContent = 'Ocultar historial de direcciones';
+            toggleHistorialBtn.textContent = 'Ocultar';
             actualizarHistorial();
         } else {
             historialContainer.style.display = 'none';
-            toggleHistorialBtn.textContent = 'Ver historial de direcciones';
+            toggleHistorialBtn.textContent = 'Historial';
         }
     });
 
     //Botón que elimina todas las búsquedas del historial
     document.getElementById("borrarHistorial").addEventListener("click", function() {
         borrarHistorial();
+    });
+
+    // Toggle para mostrar/ocultar terremotos
+    const toggleTerremotosBtn = document.getElementById('toggleTerremotos');
+    let terremotosVisible = false;
+    let terremotosLayer = null;
+
+    toggleTerremotosBtn.addEventListener('click', () => {
+        terremotosVisible = !terremotosVisible;
+        
+        if (terremotosVisible) {
+            // Mostrar terremotos
+            toggleTerremotosBtn.textContent = 'Ocultar Movimientos Sísmicos';
+           
+        } else {
+            // Ocultar terremotos
+            toggleTerremotosBtn.textContent = 'Mostrar Movimientos Sísmicos';
+            
+        }
     });
 
     // Modifica el evento del botón buscar para pasar la categoría:
