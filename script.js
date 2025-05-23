@@ -35,9 +35,8 @@ var ubicacionesTokio = [
     { nombre: "国立博物館 - National Museum of Tokio", coords: [35.71883262271108, 139.77652149580555], icono: "images/museo.png" }
 ];
 
-
-
 function procesarXML(url) {
+
     // Obtener el archivo XML y procesarlo
     fetch(url)
         .then(response => response.text())  // Leer el XML como texto
@@ -67,24 +66,44 @@ function procesarXML(url) {
             for (let i = 0; i < latitudes.length; i++) {
                 const latitud = parseFloat(latitudes[i].textContent);
                 const longitud = parseFloat(longitudes[i].textContent);
-                
-                // Crear el marcador
-                const marker = new google.maps.Marker({
-                    position: { lat: latitud, lng: longitud },
-                    map: map,
-                    icon: {
-                        url: "images/terremoto.webp",
-                        scaledSize: new google.maps.Size(32, 32)
-                    }
-                });
-                
-                // Guardar el marcador en el array
-                window.terremotosMarkers.push(marker);
-            }      })
+
+                // Hacer la solicitud a Nominatim para verificar si es agua o tierra
+                fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitud}&lon=${longitud}&format=json&addressdetails=1`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Verificar si la dirección contiene "sea" o "ocean" (simplificado)
+                        const esAgua = data.display_name.toLowerCase().includes('sea') || data.display_name.toLowerCase().includes('ocean');
+
+                        let iconoTerremoto;
+                        if (esAgua) {
+                            iconoTerremoto = "images/agua.webp";  // Icono para agua
+                        } else {
+                            iconoTerremoto = "images/terremoto.webp";  // Icono para tierra
+                        }
+                        // Crear el marcador con un icono basado en si es agua o tierra
+                        const marker = new google.maps.Marker({
+                            position: { lat: latitud, lng: longitud },
+                            map: map,   
+                            icon: {
+                                url: iconoTerremoto,
+                                scaledSize: new google.maps.Size(32, 32)
+                            }
+                        });
+
+                        // Guardar el marcador en el array
+                        window.terremotosMarkers.push(marker);
+                    })
+                    .catch(error => {
+                        console.error("Error al obtener la información de Nominatim:", error);
+                    });
+            }
+
+        })
         .catch(error => {
             console.error("Error al cargar el archivo XML:", error);
         });
 }
+
 
 // Función para actualizar la leyenda
 function actualizarLeyenda() {
@@ -495,7 +514,7 @@ function initMap() {
     // Modifica obtenerCoordenadas para aceptar la categoría:
     function obtenerCoordenadas(direccion, categoria) {
         const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(direccion)}&addressdetails=1&limit=1&lang=es`;
-    
+
         // Mostrar indicador de carga
         const buscarBtn = document.getElementById('buscarDireccion');
         const originalText = buscarBtn.innerHTML;
