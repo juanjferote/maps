@@ -45,59 +45,63 @@ function procesarXML(url) {
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(xmlString, "application/xml");
 
-            // El espacio de nombres del XML (ajústalo si es necesario)
-            const namespace = "http://www.w3.org/2003/01/geo/wgs84_pos#";  // Cambia esto si es diferente
+            // El espacio de nombres del XML
+            const namespace = "http://www.w3.org/2003/01/geo/wgs84_pos#"; 
 
-            // Obtener todos los elementos 'geo:lat' y 'geo:long' usando el espacio de nombres
+            // Obtener elementos 'geo:lat', 'geo:long' y 'title'
             const latitudes = xmlDoc.getElementsByTagNameNS(namespace, "lat");
             const longitudes = xmlDoc.getElementsByTagNameNS(namespace, "long");
+            const titles = xmlDoc.getElementsByTagName("title");
 
-            // Eliminar marcadores de terremotos anteriores
+            // Eliminar marcadores anteriores
             if (window.terremotosMarkers) {
-                window.terremotosMarkers.forEach(marker => {
-                    if (marker) {
-                        marker.setMap(null);
-                    }
-                });
+                window.terremotosMarkers.forEach(marker => marker.setMap(null));
                 window.terremotosMarkers = [];
             }
 
-            // Iterar sobre las latitudes y longitudes para agregar marcadores
+            // Iterar sobre los elementos para agregar marcadores
             for (let i = 0; i < latitudes.length; i++) {
                 const latitud = parseFloat(latitudes[i].textContent);
                 const longitud = parseFloat(longitudes[i].textContent);
 
-                // Hacer la solicitud a Nominatim para verificar si es agua o tierra
-                fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitud}&lon=${longitud}&format=json&addressdetails=1`)
-                    .then(response => response.json())
-                    .then(data => {
-                        // Verificar si la dirección contiene "sea" o "ocean" (simplificado)
-                        const esAgua = data.display_name.toLowerCase().includes('sea') || data.display_name.toLowerCase().includes('ocean');
+                // Obtener el contenido del título
+                const titleText = titles[i] ? titles[i].textContent : "";
 
-                        let iconoTerremoto;
-                        if (esAgua) {
-                            iconoTerremoto = "images/tsunami.webp";  // Icono para agua
+                // Comprobar si el título tiene el formato esperado
+                if (titleText.includes("-Info.terremoto:")) {
+                    // Extraer la fecha y hora
+                    const dateText = titleText.split(':')[1]?.trim();  // Obtener la fecha y hora después de ":"
+                    
+                    if (dateText) {
+                        const day = parseInt(dateText.split(' ')[0].split('/')[0]);
+
+                        // Determinar el icono basado en la quincena
+                        let iconUrl;
+                        if (day <= 15) {
+                            iconUrl = "images/terremoto_quincena1.webp";  // Primer quincena
                         } else {
-                            iconoTerremoto = "images/terremoto.webp";  // Icono para tierra
+                            iconUrl = "images/terremoto_quincena2.webp";  // Segunda quincena
                         }
-                        // Crear el marcador con un icono basado en si es agua o tierra
+
+                        // Crear el marcador
                         const marker = new google.maps.Marker({
                             position: { lat: latitud, lng: longitud },
-                            map: map,   
+                            map: map,
                             icon: {
-                                url: iconoTerremoto,
+                                url: iconUrl,
                                 scaledSize: new google.maps.Size(32, 32)
                             }
                         });
 
                         // Guardar el marcador en el array
                         window.terremotosMarkers.push(marker);
-                    })
-                    .catch(error => {
-                        console.error("Error al obtener la información de Nominatim:", error);
-                    });
+                    } else {
+                        console.error("No se pudo extraer la fecha correctamente de titleText:", titleText);
+                    }
+                } else {
+                    console.error("Formato de titleText no esperado:", titleText);
+                }
             }
-
         })
         .catch(error => {
             console.error("Error al cargar el archivo XML:", error);
@@ -117,7 +121,8 @@ function actualizarLeyenda() {
         { tipo: 'Estadios', icono: 'images/estadio2.webp' },
         { tipo: 'Museos', icono: 'images/museo2.webp' },
         { tipo: 'Marcador', icono: 'images/mapa2.webp' },
-        { tipo: 'Movimientos Sísmicos', icono: 'images/terremoto.webp' } 
+        { tipo: 'Movimientos sísmicos primera quincena', icono: 'images/terremoto_quincena1.webp' },
+        { tipo: 'Movimientos sísmicos segunda quincena', icono: 'images/terremoto_quincena2.webp' } 
     ];
 
     // Añadir cada tipo a la leyenda
