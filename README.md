@@ -61,6 +61,7 @@ Proyecto "maps" Sesión 1 – Insertar un mapa. Para practicas 1ºDAW
 
 **Soluciones aplicadas:**^
 - [Solución 1: Descargar otra API diferente a la de Google Maps]
+- [Solución 2: Cambiar el formato de las imágenes]
 
 **Fuentes consultadas**
 - [https://chatgpt.com/]
@@ -76,3 +77,33 @@ Proyecto "maps" Sesión 1 – Insertar un mapa. Para practicas 1ºDAW
 
  *Ideas de mejora futura:*
  - [Agregar más funcionalidades y más estilos. Mejorar la función de borrar iconos] 
+
+
+  ## sesion 4
+
+**Resumen:**
+[Hemos implementado las funcionalidades para leer un xml y poder analizarlo para usar sus datos. También hemos implementado la visualización de iconos intuitivos dependiendo de su funcionalidad, y los hemos clasificado por quincenas y lugares visitados. Hemos validado la funcionalidad de borrar el historial e implementado más estilos para darle mayor atractivo al proyecto.]
+
+**Dificultades encontradas**
+- [Dificultad 1: Dividir los movimientos sísmicos en terremotos y maremotos. No se ha podido llevar a cabo porque una biblioteca que se estaba utilizando no funcionaba correctamente]
+
+**Soluciones aplicadas:**^
+- [Solución 1: Aplicar otro criterio y mostrar los terremotos en función de la fecha en la que se produjeron (primera o segunda quincena del mes)]
+
+**Fuentes consultadas**
+- [https://chatgpt.com/]
+- [https://developers.google.com/maps/documentation/javascript/examples/map-simple#maps_map_simple-html]
+- [https://codepen.io/carlostessier-1472587534/pen/WbbBEvR]
+- [https://www.flaticon.com/]
+- [https://squoosh.app/editor]
+- [https://www.google.es/maps]
+- [https://nominatim.org/]
+
+ 
+ **Decisiones tecnicas**
+ - [Iconos personalizados para la clasificación de los terremotos.]
+ - [Cambiamos el métodos de clasificación para mostrarlos.]
+
+
+ *Ideas de mejora futura:*
+ - [Para futuros proyectos, se recomienda modular más el código.] 

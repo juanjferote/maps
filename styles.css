@@ -20,9 +20,9 @@ html, body {
     left: 20px;
     z-index: 2;
     background: rgba(0, 0, 0, 0.6);
-    padding: 0; /* Eliminamos el padding del contenedor principal */
-    width: 280px; /* Ancho ajustado para mejor legibilidad */
-    max-height: 90vh; /* Altura máxima del 90% del viewport */
+    padding: 0;
+    width: 320px;
+    max-height: 90vh;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(5px);
@@ -32,7 +32,115 @@ html, body {
     color: #fff;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Aseguramos que el borde redondeado se mantenga */
+    overflow: hidden;
+}
+
+/* Cuando el formulario está en la esquina (durante búsqueda) */
+body.city-selected #form-container,
+body.search-performed #form-container {
+    width: 380px;
+    padding: 15px;
+}
+
+/* Estilos para el contenedor del historial */
+.historial-contenedor {
+    margin: 15px 0;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.historial-contenedor h4 {
+    margin: 0 0 15px 0;
+    color: #4facfe;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+#listaDirecciones {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#listaDirecciones li {
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#listaDirecciones li:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Estilos para los botones de búsqueda e historial */
+.botones-busqueda {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+    flex-wrap: nowrap; /* Evitar que los botones se rompan a una nueva línea */
+    justify-content: center;
+}
+
+.botones-busqueda button {
+    flex: 1;
+    min-width: 100px;
+    padding: 8px 12px;
+    white-space: nowrap;
+}
+
+/* Asegurar que los botones se mantengan centrados cuando el formulario está en la esquina */
+body.city-selected .botones-busqueda,
+body.search-performed .botones-busqueda {
+    margin: 10px 0;
+    padding: 0 20px;
+    flex-wrap: nowrap; /* Evitar que los botones se rompan a una nueva línea */
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Asegurar que los botones tengan el mismo ancho en ambos estados */
+.botones-busqueda button {
+    flex: 1;
+    min-width: 120px;
+    width: 45%; /* Establecer un ancho específico para ambos botones */
+}
+
+/* Ajuste del contenedor de contenido para el nuevo ancho */
+#form-content {
+    overflow-y: auto;
+    max-height: 90vh;
+    padding: 20px;
+    padding-right: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+/* Estilos para los botones de búsqueda e historial */
+.botones-busqueda {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px 0;
+    flex-wrap: wrap;
+}
+
+.botones-busqueda button {
+    flex: 1;
+    min-width: 100px;
+    padding: 8px 12px;
+    white-space: nowrap;
+}
+
+/* Asegurar que los botones se mantengan centrados cuando el formulario está en la esquina */
+body.city-selected .botones-busqueda {
+    margin: 10px 0;
+    padding: 0 20px;
+    justify-content: center;
 }
 
 /* Contenedor interno para el scroll */

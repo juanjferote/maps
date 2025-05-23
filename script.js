@@ -35,6 +35,124 @@ var ubicacionesTokio = [
     { nombre: "国立博物館 - National Museum of Tokio", coords: [35.71883262271108, 139.77652149580555], icono: "images/museo.png" }
 ];
 
+function procesarXML(url) {
+
+    // Obtener el archivo XML y procesarlo
+    fetch(url)
+        .then(response => response.text())  // Leer el XML como texto
+        .then(xmlString => {
+            // Usar DOMParser para convertir el XML en un objeto Document
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlString, "application/xml");
+
+            // El espacio de nombres del XML
+            const namespace = "http://www.w3.org/2003/01/geo/wgs84_pos#"; 
+
+            // Obtener elementos 'geo:lat', 'geo:long' y 'title'
+            const latitudes = xmlDoc.getElementsByTagNameNS(namespace, "lat");
+            const longitudes = xmlDoc.getElementsByTagNameNS(namespace, "long");
+            const titles = xmlDoc.getElementsByTagName("title");
+
+            // Eliminar marcadores anteriores
+            if (window.terremotosMarkers) {
+                window.terremotosMarkers.forEach(marker => marker.setMap(null));
+                window.terremotosMarkers = [];
+            }
+
+            // Iterar sobre los elementos para agregar marcadores
+            for (let i = 0; i < latitudes.length; i++) {
+                const latitud = parseFloat(latitudes[i].textContent);
+                const longitud = parseFloat(longitudes[i].textContent);
+
+                // Obtener el contenido del título
+                const titleText = titles[i] ? titles[i].textContent : "";
+
+                // Comprobar si el título tiene el formato esperado
+                if (titleText.includes("-Info.terremoto:")) {
+                    // Extraer la fecha y hora
+                    const dateText = titleText.split(':')[1]?.trim();  // Obtener la fecha y hora después de ":"
+                    
+                    if (dateText) {
+                        const day = parseInt(dateText.split(' ')[0].split('/')[0]);
+
+                        // Determinar el icono basado en la quincena
+                        let iconUrl;
+                        if (day <= 15) {
+                            iconUrl = "images/terremoto_quincena1.webp";  // Primer quincena
+                        } else {
+                            iconUrl = "images/terremoto_quincena2.webp";  // Segunda quincena
+                        }
+
+                        // Crear el marcador
+                        const marker = new google.maps.Marker({
+                            position: { lat: latitud, lng: longitud },
+                            map: map,
+                            icon: {
+                                url: iconUrl,
+                                scaledSize: new google.maps.Size(32, 32)
+                            }
+                        });
+
+                        // Guardar el marcador en el array
+                        window.terremotosMarkers.push(marker);
+                    } else {
+                        console.error("No se pudo extraer la fecha correctamente de titleText:", titleText);
+                    }
+                } else {
+                    console.error("Formato de titleText no esperado:", titleText);
+                }
+            }
+        })
+        .catch(error => {
+            console.error("Error al cargar el archivo XML:", error);
+        });
+}
+
+
+function cargarCapitales() {
+    fetch('capitales.xml')
+        .then(response => response.text())
+        .then(str => {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(str, 'application/xml');
+            const ciudades = xmlDoc.getElementsByTagName('City');
+
+            for (let i = 0; i < ciudades.length; i++) {
+                const ciudad = ciudades[i];
+                const nombre = ciudad.getElementsByTagName('Name')[0].textContent;
+                const pais = ciudad.getElementsByTagName('Country')[0].textContent;
+                const latitud = parseFloat(ciudad.getElementsByTagName('Latitude')[0].textContent);
+                const longitud = parseFloat(ciudad.getElementsByTagName('Longitude')[0].textContent);
+
+                const marker = new google.maps.Marker({
+                    position: { lat: latitud, lng: longitud },
+                    map: map,
+                    title: `${nombre}, ${pais}`,
+                    icon: {
+                        url: 'images/punto.webp',
+                        scaledSize: new google.maps.Size(32, 32)
+                    },
+                    visible: false // Ocultar por defecto
+                });
+
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `<strong>${nombre}, ${pais}</strong>`
+                });
+
+                marker.addListener('click', () => {
+                    infoWindow.open(map, marker);
+                });
+                
+                // Guardar el marcador en un array para poder mostrarlo/ocultarlo después
+                if (!window.marcadoresLugaresVisitados) {
+                    window.marcadoresLugaresVisitados = [];
+                }
+                window.marcadoresLugaresVisitados.push(marker);
+            }
+        })
+        .catch(error => console.error("Error al cargar capitales:", error));
+}
+
 
 // Función para actualizar la leyenda
 function actualizarLeyenda() {
@@ -43,11 +161,14 @@ function actualizarLeyenda() {
 
     // Definir los tipos de lugares con sus imágenes locales
     const tiposLugares = [
-        { tipo: 'Plazas', icono: 'images/plaza.png' },
-        { tipo: 'Monumentos Religiosos', icono: 'images/iglesia.png' },
-        { tipo: 'Estadios', icono: 'images/estadio.png' },
-        { tipo: 'Museos', icono: 'images/museo.png' },
-        { tipo: 'Marcador', icono: 'images/mapa.png' } 
+        { tipo: 'Plazas', icono: 'images/plaza2.webp' },
+        { tipo: 'Monumentos Religiosos', icono: 'images/iglesia2.webp' },
+        { tipo: 'Estadios', icono: 'images/estadio2.webp' },
+        { tipo: 'Museos', icono: 'images/museo2.webp' },
+        { tipo: 'Marcador', icono: 'images/mapa2.webp' },
+        { tipo: 'Lugar Visitado', icono: 'images/punto.webp' },
+        { tipo: 'Movimientos sísmicos primera quincena', icono: 'images/terremoto_quincena1.webp' },
+        { tipo: 'Movimientos sísmicos segunda quincena', icono: 'images/terremoto_quincena2.webp' } 
     ];
 
     // Añadir cada tipo a la leyenda
@@ -127,6 +248,7 @@ const iconosCategoria = {
     iglesia: 'images/iglesia.png',
     estadio: 'images/estadio.png',
     museo: 'images/museo.png',
+    punto: 'images/punto.png',
     marcador: 'images/mapa.png', // predeterminado
     '': 'images/mapa.png' // por si acaso
 };
@@ -189,7 +311,9 @@ function initMap() {
             }
         ]
     });
-    
+        
+    cargarCapitales();
+
     // Asegurarse de que el formulario empiece centrado
     document.body.classList.remove('city-selected', 'search-performed');
 
@@ -208,6 +332,32 @@ function initMap() {
 
     // Añadir array para marcadores de historial
     window.historialMarkers = [];
+    
+    // Variable para rastrear si los marcadores de lugares visitados están visibles
+    let lugaresVisitadosVisibles = false;
+    
+    // Configurar el evento del botón de lugares visitados
+    const toggleLugaresBtn = document.getElementById('toggleLugaresVisitados');
+    if (toggleLugaresBtn) {
+        toggleLugaresBtn.addEventListener('click', function() {
+            // Mover el formulario a la esquina superior izquierda
+            document.body.classList.add('search-performed');
+            
+            // Alternar la visibilidad
+            lugaresVisitadosVisibles = !lugaresVisitadosVisibles;
+            
+            // Mostrar u ocultar los marcadores de lugares visitados
+            if (window.marcadoresLugaresVisitados) {
+                window.marcadoresLugaresVisitados.forEach(marker => {
+                    marker.setVisible(lugaresVisitadosVisibles);
+                });
+            }
+            
+            // Actualizar el texto del botón
+            toggleLugaresBtn.textContent = lugaresVisitadosVisibles ? 
+                'Ocultar Lugares Visitados' : 'Mostrar Lugares Visitados';
+        });
+    }
 
     // Función para actualizar la visualización del historial
     function actualizarHistorial() {
@@ -287,13 +437,59 @@ function initMap() {
             };
 
             listaDirecciones.appendChild(li);
-        });
+        });  
+
+
     }
 
     // Función para eliminar una dirección del historial (solo una)
     function eliminarDelHistorial(index) {
+        // Obtener la dirección que se va a eliminar
+        const direccionAEliminar = historialDirecciones[index];
+        
+        // Eliminar el marcador del array de marcadores de historial si existe
+        if (window.historialMarkers && window.historialMarkers[index]) {
+            window.historialMarkers[index].setMap(null);
+            window.historialMarkers.splice(index, 1);
+        }
+        
+        // Función para comparar posiciones con cierta tolerancia
+        const posicionesIguales = (pos1, pos2) => {
+            const precision = 0.000001; // Tolerancia para comparación de coordenadas
+            return Math.abs(pos1.lat - pos2.lat) < precision && 
+                   Math.abs(pos1.lng - pos2.lng) < precision;
+        };
+        
+        // Eliminar cualquier marcador que coincida con las coordenadas (de cualquier tipo)
+        if (window.markers) {
+            // Crear una copia del array para poder modificarlo mientras iteramos
+            const marcadoresAEliminar = [];
+            
+            // Primero identificar los marcadores a eliminar
+            window.markers.forEach((marker, i) => {
+                const pos = marker.getPosition();
+                if (pos && pos.lat && pos.lng) {
+                    const posMarcador = { lat: pos.lat(), lng: pos.lng() };
+                    if (posicionesIguales(posMarcador, direccionAEliminar.coordenadas)) {
+                        marcadoresAEliminar.push(i);
+                    }
+                }
+            });
+            
+            // Eliminar los marcadores en orden inverso para no afectar los índices
+            marcadoresAEliminar.sort((a, b) => b - a).forEach(i => {
+                if (window.markers[i]) {
+                    window.markers[i].setMap(null);
+                    window.markers.splice(i, 1);
+                }
+            });
+        }
+        
+        // Eliminar la dirección del historial
         historialDirecciones.splice(index, 1);
         localStorage.setItem('historialDirecciones', JSON.stringify(historialDirecciones));
+        
+        // Actualizar la vista del historial
         actualizarHistorial();
     }
 
@@ -345,17 +541,49 @@ function initMap() {
         historialVisible = !historialVisible;
         if (historialVisible) {
             historialContainer.style.display = 'block';
-            toggleHistorialBtn.textContent = 'Ocultar historial de direcciones';
+            toggleHistorialBtn.textContent = 'Ocultar';
             actualizarHistorial();
         } else {
             historialContainer.style.display = 'none';
-            toggleHistorialBtn.textContent = 'Ver historial de direcciones';
+            toggleHistorialBtn.textContent = 'Historial';
         }
     });
 
     //Botón que elimina todas las búsquedas del historial
     document.getElementById("borrarHistorial").addEventListener("click", function() {
         borrarHistorial();
+    });
+
+    // mostrar/ocultar terremotos
+    const toggleTerremotosBtn = document.getElementById('toggleTerremotos');
+    let terremotosVisible = false;
+    let terremotosLayer = null;
+    window.terremotosMarkers = [];  // Array para almacenar los marcadores de terremotos
+
+    toggleTerremotosBtn.addEventListener('click', () => {
+        const url = "https://www.ign.es/ign/RssTools/sismologia.xml";  
+        terremotosVisible = !terremotosVisible;
+        
+        if (terremotosVisible) {
+            // Si se está mostrando, procesar el XML para mostrar los terremotos
+            procesarXML(url);
+            toggleTerremotosBtn.textContent = 'Ocultar Movimientos Sísmicos';
+        } else {
+            // Si se está ocultando, eliminar los marcadores de terremotos
+            if (window.terremotosMarkers) {
+                window.terremotosMarkers.forEach(marker => {
+                    if (marker) {
+                        marker.setMap(null);
+                    }
+                });
+                window.terremotosMarkers = [];
+            }
+            toggleTerremotosBtn.textContent = 'Mostrar Movimientos Sísmicos';
+        }
+        
+        // Mover el formulario a la esquina superior izquierda
+        document.body.classList.add('search-performed');
+        document.body.classList.add('city-selected');
     });
 
     // Modifica el evento del botón buscar para pasar la categoría:
@@ -368,7 +596,7 @@ function initMap() {
     // Modifica obtenerCoordenadas para aceptar la categoría:
     function obtenerCoordenadas(direccion, categoria) {
         const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(direccion)}&addressdetails=1&limit=1&lang=es`;
-    
+
         // Mostrar indicador de carga
         const buscarBtn = document.getElementById('buscarDireccion');
         const originalText = buscarBtn.innerHTML;
