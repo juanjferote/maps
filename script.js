@@ -109,6 +109,41 @@ function procesarXML(url) {
 }
 
 
+function cargarCapitales() {
+    fetch('capitales.xml')
+        .then(response => response.text())
+        .then(str => {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(str, 'application/xml');
+            const capitales = xmlDoc.getElementsByTagName('capital');
+
+            for (let i = 0; i < capitales.length; i++) {
+                const capital = capitales[i];
+                const ciudad = capital.getElementsByTagName('ciudad')[i].textContent;
+                const pais = capital.getElementsByTagName('pais')[i].textContent;
+                const latitud = parseFloat(capital.getElementsByTagName('latitud')[i].textContent);
+                const longitud = parseFloat(capital.getElementsByTagName('longitud')[i].textContent);
+
+                const marker = new google.maps.Marker({
+                    position: { lat: latitud, lng: longitud },
+                    map: map,
+                    title: `${ciudad}, ${pais}`,
+                    icon: 'images/punto.png' // Usa tu icono deseado
+                });
+
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `<strong>${ciudad}, ${pais}</strong>`
+                });
+
+                marker.addListener('click', () => {
+                    infoWindow.open(map, marker);
+                });
+            }
+        })
+        .catch(error => console.error("Error al cargar capitales:", error));
+}
+
+
 // Función para actualizar la leyenda
 function actualizarLeyenda() {
     const contenido = document.getElementById('contenido-leyenda');
@@ -265,6 +300,8 @@ function initMap() {
         ]
     });
         
+    cargarCapitales();
+
     // Asegurarse de que el formulario empiece centrado
     document.body.classList.remove('city-selected', 'search-performed');
 
@@ -362,7 +399,9 @@ function initMap() {
             };
 
             listaDirecciones.appendChild(li);
-        });        
+        });  
+
+
     }
 
     // Función para eliminar una dirección del historial (solo una)
