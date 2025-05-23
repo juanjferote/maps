@@ -624,6 +624,7 @@ function initMap() {
         document.body.classList.add('city-selected');
         var ciudadSeleccionada;
         let lugaresInteres = [];
+      
         
 
         window.markers = [];
