@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CapitalCities>
+  <City>
+    <Country>Alemania</Country>
+    <Name>Berlín</Name>
+    <Latitude>52.5200</Latitude>
+    <Longitude>13.4050</Longitude>
+  </City>
+  <City>
+    <Country>Marruecos</Country>
+    <Name>Rabat</Name>
+    <Latitude>34.0209</Latitude>
+    <Longitude>-6.8416</Longitude>
+  </City>
+  <City>
+    <Country>Portugal</Country>
+    <Name>Lisboa</Name>
+    <Latitude>38.7169</Latitude>
+    <Longitude>-9.1399</Longitude>
+  </City>
+  <City>
+    <Country>Irlanda</Country>
+    <Name>Dublín</Name>
+    <Latitude>53.3498</Latitude>
+    <Longitude>-6.2603</Longitude>
+  </City>
+  <City>
+    <Country>España</Country>
+    <Name>Madrid</Name>
+    <Latitude>40.4168</Latitude>
+    <Longitude>-3.7038</Longitude>
+  </City>
+  <City>
+    <Country>Colombia</Country>
+    <Name>Bogotá</Name>
+    <Latitude>4.7110</Latitude>
+    <Longitude>-74.0721</Longitude>
+  </City>
+  <City>
+    <Country>Italia</Country>
+    <Name>Roma</Name>
+    <Latitude>41.9028</Latitude>
+    <Longitude>12.4964</Longitude>
+  </City>
+  <City>
+    <Country>Francia</Country>
+    <Name>París</Name>
+    <Latitude>48.8566</Latitude>
+    <Longitude>2.3522</Longitude>
+  </City>
+  <City>
+    <Country>Vaticano</Country>
+    <Name>Ciudad del Vaticano</Name>
+    <Latitude>41.9029</Latitude>
+    <Longitude>12.4534</Longitude>
+  </City>
+  <City>
+    <Country>Polonia</Country>
+    <Name>Varsovia</Name>
+    <Latitude>52.2297</Latitude>
+    <Longitude>21.0122</Longitude>
+  </City>
+  <City>
+    <Country>Estados Unidos</Country>
+    <Name>Washington D.C.</Name>
+    <Latitude>38.9072</Latitude>
+    <Longitude>-77.0369</Longitude>
+  </City>
+  <City>
+    <Country>Reino Unido</Country>
+    <Name>Londres</Name>
+    <Latitude>51.5074</Latitude>
+    <Longitude>-0.1278</Longitude>
+  </City>
+  <City>
+    <Country>Grecia</Country>
+    <Name>Atenas</Name>
+    <Latitude>37.9838</Latitude>
+    <Longitude>23.7275</Longitude>
+  </City>
+  <City>
+    <Country>Noruega</Country>
+    <Name>Oslo</Name>
+    <Latitude>59.9139</Latitude>
+    <Longitude>10.7522</Longitude>
+  </City>
+  <City>
+    <Country>Bélgica</Country>
+    <Name>Bruselas</Name>
+    <Latitude>50.8503</Latitude>
+    <Longitude>4.3517</Longitude>
+  </City>
+  <City>
+    <Country>Países Bajos</Country>
+    <Name>Ámsterdam</Name>
+    <Latitude>52.3676</Latitude>
+    <Longitude>4.9041</Longitude>
+  </City>
+  <City>
+    <Country>México</Country>
+    <Name>Ciudad de México</Name>
+    <Latitude>19.4326</Latitude>
+    <Longitude>-99.1332</Longitude>
+  </City>
+</CapitalCities>
