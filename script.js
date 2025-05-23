@@ -76,7 +76,7 @@ function procesarXML(url) {
 
                         let iconoTerremoto;
                         if (esAgua) {
-                            iconoTerremoto = "images/agua.webp";  // Icono para agua
+                            iconoTerremoto = "images/tsunami.webp";  // Icono para agua
                         } else {
                             iconoTerremoto = "images/terremoto.webp";  // Icono para tierra
                         }
