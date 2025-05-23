@@ -76,3 +76,31 @@ Proyecto "maps" Sesión 1 – Insertar un mapa. Para practicas 1ºDAW
 
  *Ideas de mejora futura:*
  - [Agregar más funcionalidades y más estilos. Mejorar la función de borrar iconos] 
+
+
+  ## sesion 4
+
+**Resumen:**
+[Hemos implementado más funcionalidades, como la visualización de los terremotos con iconos intuitivos, y los hemos clasificado por quincenas. También hemos validado la funcionalidad de borrar el historial e implementado más estilos para darle mayor atractivo al proyecto.]
+
+**Dificultades encontradas**
+- [Dificultad 1: Mostrar los iconos de los terremotos.]
+
+**Soluciones aplicadas:**^
+- [Solución 1: Modificación de las imágenes, mayor investigación y reorganización de la función.]
+
+**Fuentes consultadas**
+- [https://chatgpt.com/]
+- [https://developers.google.com/maps/documentation/javascript/examples/map-simple#maps_map_simple-html]
+- [https://codepen.io/carlostessier-1472587534/pen/WbbBEvR]
+- [https://www.flaticon.com/]
+- [https://www.google.es/maps]
+- [https://nominatim.org/]
+ 
+ **Decisiones tecnicas**
+ - [Iconos personalizados para la clasificación de los terremotos.]
+ - [Cambiamos el métodos de clasificación para mostrarlos.]
+
+
+ *Ideas de mejora futura:*
+ - [Para futuros proyectos, se recomienda modular más el código.] 
