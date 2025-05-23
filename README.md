@@ -82,7 +82,7 @@ Proyecto "maps" Sesión 1 – Insertar un mapa. Para practicas 1ºDAW
   ## sesion 4
 
 **Resumen:**
-[Hemos implementado más funcionalidades, como la visualización de los terremotos con iconos intuitivos, y los hemos clasificado por quincenas. También hemos validado la funcionalidad de borrar el historial e implementado más estilos para darle mayor atractivo al proyecto.]
+[Hemos implementado las funcionalidades para leer un xml y poder analizarlo para usar sus datos. También hemos implementado la visualización de iconos intuitivos dependiendo de su funcionalidad, y los hemos clasificado por quincenas y lugares visitados. Hemos validado la funcionalidad de borrar el historial e implementado más estilos para darle mayor atractivo al proyecto.]
 
 **Dificultades encontradas**
 - [Dificultad 1: Dividir los movimientos sísmicos en terremotos y maremotos. No se ha podido llevar a cabo porque una biblioteca que se estaba utilizando no funcionaba correctamente]
