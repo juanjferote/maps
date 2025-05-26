@@ -132,7 +132,7 @@ function cargarCapitales() {
                         url: 'images/punto.webp',
                         scaledSize: new google.maps.Size(32, 32)
                     },
-                    visible: false // Ocultar por defecto
+                    visible: false // Ocultar por defecto 
                 });
 
                 const infoWindow = new google.maps.InfoWindow({
